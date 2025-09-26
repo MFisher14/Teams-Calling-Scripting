@@ -24,8 +24,20 @@
 .PARAMETER CompressOutput
     Switch to compress the output into a ZIP file
     
+.PARAMETER GenerateCallFlowMaps
+    Switch to automatically generate call flow maps after data collection
+    
+.PARAMETER GeneratePDF
+    Switch to generate PDF files (requires Python with Playwright)
+    
+.PARAMETER CallFlowFilterNumbers
+    Optional filter for call flow generation - only generate maps for specific numbers
+    
 .EXAMPLE
-    .\Gather-Teams-Calling-Data.ps1 -OutputPath "C:\TeamsData" -IncludeUserData
+    .\Gather-Teams-Calling-Data.ps1 -OutputPath "C:\TeamsData" -IncludeUserData -GenerateCallFlowMaps -GeneratePDF
+    
+.EXAMPLE
+    .\Gather-Teams-Calling-Data.ps1 -GenerateCallFlowMaps -CallFlowFilterNumbers "+1984308", "+1800" -GeneratePDF
     
 .NOTES
     Author: Generated for TCP Calling Issues Analysis
@@ -45,7 +57,16 @@ param(
     [switch]$IncludeUserData,
     
     [Parameter(Mandatory = $false)]
-    [switch]$CompressOutput
+    [switch]$CompressOutput,
+    
+    [Parameter(Mandatory = $false)]
+    [switch]$GenerateCallFlowMaps,
+    
+    [Parameter(Mandatory = $false)]
+    [switch]$GeneratePDF,
+    
+    [Parameter(Mandatory = $false)]
+    [string[]]$CallFlowFilterNumbers
 )
 
 # Set error action preference
@@ -209,6 +230,218 @@ function New-SummaryReport {
     Export-DataToJson -Data $summary -OutputPath $OutputPath -FileName "00_Summary"
 }
 
+# Function to test for call flow generation prerequisites
+function Test-CallFlowPrerequisites {
+    $callFlowScript = Join-Path $ModulesPath "Generate-CallFlowMaps-Simple.ps1"
+    $pdfGenerator = Join-Path $ModulesPath "pdf_generator.py"
+    
+    $prerequisites = @{
+        CallFlowScript = Test-Path $callFlowScript
+        PdfGenerator = Test-Path $pdfGenerator
+        Python = $false
+        Playwright = $false
+    }
+    
+    # Test for Python
+    try {
+        $pythonCmd = if ($IsWindows) { "python" } else { "python3" }
+        $pythonVersion = & $pythonCmd --version 2>&1
+        if ($pythonVersion -match "Python \d+\.\d+") {
+            $prerequisites.Python = $true
+        }
+    }
+    catch {
+        # Python not found
+        $prerequisites.Python = $false
+    }
+    
+    # Test for Playwright (only if Python is available)
+    if ($prerequisites.Python) {
+        try {
+            $pythonCmd = if ($IsWindows) { "python" } else { "python3" }
+            $playwrightTest = & $pythonCmd -c "import playwright; print('OK')" 2>&1
+            if ($playwrightTest -match "OK") {
+                $prerequisites.Playwright = $true
+            }
+        }
+        catch {
+            $prerequisites.Playwright = $false
+        }
+    }
+    else {
+        $prerequisites.Playwright = $false
+    }
+    
+    return $prerequisites
+}
+
+# Function to generate call flow maps
+function Invoke-CallFlowGeneration {
+    param(
+        [string]$DataPath,
+        [bool]$GeneratePDF = $false,
+        [string[]]$FilterNumbers = @()
+    )
+    
+    Write-Host "`n=== Generating Call Flow Maps ===" -ForegroundColor Cyan
+    
+    $callFlowScript = Join-Path $ModulesPath "Generate-CallFlowMaps-Simple.ps1"
+    
+    if (-not (Test-Path $callFlowScript)) {
+        Write-Warning "Call flow generation script not found: $callFlowScript"
+        return $false
+    }
+    
+    # Test prerequisites
+    $prereqs = Test-CallFlowPrerequisites
+    
+    Write-Host "Prerequisites check:" -ForegroundColor Gray
+    Write-Host "  ✓ Call flow script: $($prereqs.CallFlowScript)" -ForegroundColor $(if ($prereqs.CallFlowScript) { "Green" } else { "Red" })
+    Write-Host "  ✓ PDF generator: $($prereqs.PdfGenerator)" -ForegroundColor $(if ($prereqs.PdfGenerator) { "Green" } else { "Red" })
+    Write-Host "  ✓ Python available: $($prereqs.Python)" -ForegroundColor $(if ($prereqs.Python) { "Green" } else { "Yellow" })
+    Write-Host "  ✓ Playwright available: $($prereqs.Playwright)" -ForegroundColor $(if ($prereqs.Playwright) { "Green" } else { "Yellow" })
+    
+    if (-not $prereqs.CallFlowScript) {
+        Write-Error "Cannot generate call flow maps - script missing"
+        return $false
+    }
+    
+    # Build arguments for call flow script
+    $callFlowArgs = @()
+    $callFlowArgs += "-JsonDataPath"
+    $callFlowArgs += "`"$DataPath`""
+    
+    if ($FilterNumbers.Count -gt 0) {
+        $callFlowArgs += "-FilterByNumber"
+        foreach ($number in $FilterNumbers) {
+            $callFlowArgs += "`"$number`""
+        }
+    }
+    
+    # Add IncludeDetailedSettings for comprehensive output
+    $callFlowArgs += "-IncludeDetailedSettings"
+    
+    try {
+        # Generate HTML call flows
+        Write-Host "Generating HTML call flow maps..." -ForegroundColor Yellow
+        
+        # Construct the full argument list properly
+        $allArgs = @("-NoProfile", "-File", "`"$callFlowScript`"")
+        $allArgs += $callFlowArgs
+        
+        $process = Start-Process -FilePath "pwsh" -ArgumentList $allArgs -Wait -NoNewWindow -PassThru
+        
+        if ($process.ExitCode -eq 0) {
+            Write-Host "✓ HTML call flow maps generated successfully" -ForegroundColor Green
+            
+            # Generate PDFs if requested and prerequisites are met
+            if ($GeneratePDF) {
+                if ($prereqs.Python -and $prereqs.Playwright) {
+                    Write-Host "Generating PDF files..." -ForegroundColor Yellow
+                    
+                    # Find the most recent call flow output directory
+                    $callFlowDirs = Get-ChildItem -Path $PSScriptRoot -Directory -Name "CallFlowMaps_*" | Sort-Object -Descending
+                    if ($callFlowDirs.Count -gt 0) {
+                        $latestCallFlowDir = Join-Path $PSScriptRoot $callFlowDirs[0]
+                        $individualDir = Join-Path $latestCallFlowDir "Individual"
+                        $summaryDir = Join-Path $latestCallFlowDir "Summary"
+                        $pdfDir = Join-Path $latestCallFlowDir "PDF"
+                        
+                        # Generate PDFs using Python script
+                        $pdfGenerator = Join-Path $ModulesPath "pdf_generator.py"
+                        
+                        # Determine Python command
+                        $pythonCmd = if ($IsWindows) { "python" } else { "python3" }
+                        
+                        # Convert Individual HTML files
+                        if (Test-Path $individualDir) {
+                            $individualPdfDir = Join-Path $pdfDir "Individual"
+                            $pdfProcess = Start-Process -FilePath $pythonCmd -ArgumentList "`"$pdfGenerator`"", "`"$individualDir`"", "-o", "`"$individualPdfDir`"" -Wait -NoNewWindow -PassThru
+                            
+                            if ($pdfProcess.ExitCode -eq 0) {
+                                Write-Host "✓ Individual call flow PDFs generated" -ForegroundColor Green
+                            } else {
+                                Write-Warning "Individual PDF generation completed with warnings"
+                            }
+                        }
+                        
+                        # Convert Summary HTML files
+                        if (Test-Path $summaryDir) {
+                            $summaryPdfDir = Join-Path $pdfDir "Summary"
+                            $pdfProcess = Start-Process -FilePath $pythonCmd -ArgumentList "`"$pdfGenerator`"", "`"$summaryDir`"", "-o", "`"$summaryPdfDir`"" -Wait -NoNewWindow -PassThru
+                            
+                            if ($pdfProcess.ExitCode -eq 0) {
+                                Write-Host "✓ Summary dashboard PDF generated" -ForegroundColor Green
+                            } else {
+                                Write-Warning "Summary PDF generation completed with warnings"
+                            }
+                        }
+                        
+                        Write-Host "✓ PDF generation complete" -ForegroundColor Green
+                    } else {
+                        Write-Warning "Could not find call flow output directory for PDF generation"
+                    }
+                } else {
+                    Write-Warning "PDF generation requested but prerequisites not met:"
+                    if (-not $prereqs.Python) {
+                        Write-Warning "  - Python not available. Install Python 3.7+ to enable PDF generation"
+                    }
+                    if (-not $prereqs.Playwright) {
+                        Write-Warning "  - Playwright not available. Install with: pip install playwright"
+                        Write-Warning "  - Then install browsers with: playwright install"
+                    }
+                    if (-not $prereqs.PdfGenerator) {
+                        Write-Warning "  - PDF generator script not found"
+                    }
+                }
+            }
+            
+            return $true
+        } else {
+            Write-Warning "Call flow generation completed with exit code: $($process.ExitCode)"
+            return $false
+        }
+    }
+    catch {
+        Write-Error "Failed to generate call flow maps: $($_.Exception.Message)"
+        return $false
+    }
+}
+
+# Function to create summary report
+function New-SummaryReport {
+    param(
+        [hashtable]$CollectedData,
+        [string]$OutputPath
+    )
+    
+    $summary = @{
+        CollectionDate = Get-Date -Format "yyyy-MM-dd HH:mm:ss UTC"
+        TenantInfo = @{
+            TenantId = (Get-CsTenant -ErrorAction SilentlyContinue).TenantId
+            DisplayName = (Get-CsTenant -ErrorAction SilentlyContinue).DisplayName
+        }
+        DataSummary = @{}
+    }
+    
+    foreach ($key in $CollectedData.Keys) {
+        if ($CollectedData[$key] -is [array]) {
+            $summary.DataSummary[$key] = @{
+                Count = $CollectedData[$key].Count
+                HasData = $CollectedData[$key].Count -gt 0
+            }
+        }
+        elseif ($CollectedData[$key] -is [hashtable]) {
+            $summary.DataSummary[$key] = @{
+                Keys = @($CollectedData[$key].Keys)
+                HasData = $CollectedData[$key].Keys.Count -gt 0
+            }
+        }
+    }
+    
+    Export-DataToJson -Data $summary -OutputPath $OutputPath -FileName "00_Summary"
+}
+
 # Main execution
 try {
     Write-Host "=== Microsoft Teams Calling Data Collection ===" -ForegroundColor Cyan
@@ -299,6 +532,28 @@ try {
     Write-Host "Creating summary report..." -ForegroundColor Yellow
     New-SummaryReport -CollectedData $allData -OutputPath $outputDir
     
+    # Generate call flow maps if requested
+    if ($GenerateCallFlowMaps) {
+        $callFlowSuccess = Invoke-CallFlowGeneration -DataPath $outputDir -GeneratePDF:$GeneratePDF -FilterNumbers $CallFlowFilterNumbers
+        
+        if ($callFlowSuccess) {
+            Write-Host "✓ Call flow maps generated successfully" -ForegroundColor Green
+            
+            # Find the most recent call flow directory for reporting
+            $callFlowDirs = Get-ChildItem -Path $PSScriptRoot -Directory -Name "CallFlowMaps_*" | Sort-Object -Descending
+            if ($callFlowDirs.Count -gt 0) {
+                $latestCallFlowDir = Join-Path $PSScriptRoot $callFlowDirs[0]
+                $dashboardFile = Join-Path $latestCallFlowDir "Summary" "Dashboard.html"
+                
+                if (Test-Path $dashboardFile) {
+                    Write-Host "Call flow dashboard: $dashboardFile" -ForegroundColor Cyan
+                }
+            }
+        } else {
+            Write-Warning "Call flow map generation encountered issues"
+        }
+    }
+    
     # Compress output if requested
     if ($CompressOutput) {
         Write-Host "Compressing output..." -ForegroundColor Yellow
@@ -319,6 +574,22 @@ try {
     
     $totalFiles = (Get-ChildItem -Path $outputDir -Filter "*.json").Count
     Write-Host "Total JSON files created: $totalFiles" -ForegroundColor Gray
+    
+    if ($GenerateCallFlowMaps) {
+        $callFlowDirs = Get-ChildItem -Path $PSScriptRoot -Directory -Name "CallFlowMaps_*" | Sort-Object -Descending
+        if ($callFlowDirs.Count -gt 0) {
+            $latestCallFlowDir = Join-Path $PSScriptRoot $callFlowDirs[0]
+            Write-Host "Call flow maps location: $latestCallFlowDir" -ForegroundColor Gray
+            
+            if ($GeneratePDF) {
+                $pdfDir = Join-Path $latestCallFlowDir "PDF"
+                if (Test-Path $pdfDir) {
+                    $pdfCount = (Get-ChildItem -Path $pdfDir -Filter "*.pdf" -Recurse).Count
+                    Write-Host "PDF files generated: $pdfCount" -ForegroundColor Gray
+                }
+            }
+        }
+    }
     
     if ($CompressOutput -and (Test-Path "$outputDir.zip")) {
         $zipSize = [math]::Round((Get-Item "$outputDir.zip").Length / 1MB, 2)

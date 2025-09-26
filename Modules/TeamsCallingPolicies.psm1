@@ -1,5 +1,5 @@
 # TeamsCallingPolicies.psm1
-# Module for collecting Teams calling policies and configurations
+# Module f        # "CallingRegions" = try { Get-CsTenantCallingRegion -ErrorAction Stop } catch { Write-Warning "Could not retrieve Tenant Calling Regions. The cmdlet 'Get-CsTenantCallingRegion' may be obsolete or require different permissions."; $null }r collecting Teams calling policies and configurations
 
 function Get-TeamsCallingPoliciesData {
     <#
@@ -28,7 +28,7 @@ function Get-TeamsCallingPoliciesData {
         
         # Voice Applications
         Write-Host "    - Voice applications" -ForegroundColor DarkCyan
-        $policiesData.VoiceApplications = @(Get-CsVoiceApplicationsPolicy -ErrorAction SilentlyContinue)
+        $policiesData.VoiceApplications = @(Get-CsApplicationAccessPolicy -ErrorAction SilentlyContinue)
         
         # IP Phone Policies
         Write-Host "    - IP phone policies" -ForegroundColor DarkCyan
@@ -36,15 +36,29 @@ function Get-TeamsCallingPoliciesData {
         
         # Calling Regions
         Write-Host "    - Calling regions" -ForegroundColor DarkCyan
-        $policiesData.TeamsCallingRegion = @(Get-CsTenantCallingRegion -ErrorAction SilentlyContinue)
+                # "CallingRegions" = try { Get-CsTenantCallingRegion -ErrorAction Stop } catch { Write-Warning "Could not retrieve Tenant Calling Regions. The cmdlet 'Get-CsTenantCallingRegion' may be obsolete or require different permissions."; $null }
         
         # Branch Survivability Policies
         Write-Host "    - Branch survivability policies" -ForegroundColor DarkCyan
-        $policiesData.TeamsBranchSurvivabilityPolicy = @(Get-CsTeamsBranchSurvivabilityPolicy -ErrorAction SilentlyContinue)
+        # Note: Get-CsTeamsBranchSurvivabilityPolicy may be obsolete in newer versions
+        try {
+            $policiesData.TeamsBranchSurvivabilityPolicy = @(Get-CsTeamsBranchSurvivabilityPolicy -ErrorAction Stop)
+        }
+        catch {
+            Write-Warning "Could not retrieve Branch Survivability Policies. The cmdlet 'Get-CsTeamsBranchSurvivabilityPolicy' may be obsolete or require different permissions."
+            $policiesData.TeamsBranchSurvivabilityPolicy = @()
+        }
         
         # Dialout Policies
         Write-Host "    - Dialout policies" -ForegroundColor DarkCyan
-        $policiesData.TeamsDialoutPolicy = @(Get-CsTeamsDialoutPolicy -ErrorAction SilentlyContinue)
+        # Note: Get-CsTeamsDialoutPolicy may be obsolete in newer versions
+        try {
+            $policiesData.TeamsDialoutPolicy = @(Get-CsTeamsDialoutPolicy -ErrorAction Stop)
+        }
+        catch {
+            Write-Warning "Could not retrieve Teams Dialout Policies. The cmdlet 'Get-CsTeamsDialoutPolicy' may be obsolete or require different permissions."
+            $policiesData.TeamsDialoutPolicy = @()
+        }
         
         # Network Configuration
         Write-Host "    - Network configuration" -ForegroundColor DarkCyan
