@@ -1,0 +1,2279 @@
+{
+  "AutoAttendantDetails": [
+    {
+      "Id": "85756f7c-16f2-440f-a599-3af0a7787f7f",
+      "Identity": "85756f7c-16f2-440f-a599-3af0a7787f7f",
+      "TenantId": "ade36756-5d88-4577-b102-8bb47b266573",
+      "Name": "Dial By Name",
+      "LanguageId": "en-US",
+      "VoiceId": "Male",
+      "DefaultCallFlow": {
+        "Id": "871cbb3d-c07e-4838-ae69-bef350db8abd",
+        "Name": "Dial By Name Default call flow",
+        "Greetings": [],
+        "Menu": {
+          "Name": "Business hours call flow",
+          "Prompts": [
+            {
+              "ActiveType": 1,
+              "TextToSpeechPrompt": "Please say a name, or use your dialpad to type a name.",
+              "AudioFilePrompt": null
+            }
+          ],
+          "MenuOptions": [],
+          "DialByNameEnabled": true,
+          "DirectorySearchMethod": 1,
+          "IsInvokedByTenantAdmin": false
+        },
+        "IsInvokedByTenantAdmin": false,
+        "ForceListenMenuEnabled": true
+      },
+      "Operator": null,
+      "VoiceResponseEnabled": true,
+      "TimeZoneId": "Eastern Standard Time",
+      "CallFlows": [
+        {
+          "Id": "dfabb51e-79f5-4afb-878d-a1ace8b04efc",
+          "Name": "Dial By Name After hours call flow",
+          "Greetings": [],
+          "Menu": {
+            "Name": "After hours call flow",
+            "Prompts": [],
+            "MenuOptions": [
+              {
+                "Action": 1,
+                "DtmfResponse": 100,
+                "VoiceResponses": [],
+                "CallTarget": null,
+                "Prompt": null,
+                "Description": null,
+                "MainlineAttendantTarget": null
+              }
+            ],
+            "DialByNameEnabled": false,
+            "DirectorySearchMethod": 0,
+            "IsInvokedByTenantAdmin": false
+          },
+          "IsInvokedByTenantAdmin": false,
+          "ForceListenMenuEnabled": false
+        }
+      ],
+      "Schedules": [
+        {
+          "Id": "7d2cc82f-bf2d-46d6-bf66-6ccac52e14ef",
+          "Name": "After hours Dial By Name",
+          "Type": 0,
+          "WeeklyRecurrentSchedule": {
+            "MondayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "TuesdayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "WednesdayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "ThursdayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "FridayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "SaturdayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "SundayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "ComplementEnabled": true,
+            "RecurrenceRange": {
+              "Type": "NoEndDate",
+              "StartDateTime": "0001-01-01T00:00:00Z",
+              "EndDateTime": null,
+              "NumberOfOccurrences": null,
+              "IsInvokedByTenantAdmin": false
+            }
+          },
+          "FixedSchedule": null,
+          "AssociatedConfigurationIds": [
+            "85756f7c-16f2-440f-a599-3af0a7787f7f"
+          ]
+        }
+      ],
+      "CallHandlingAssociations": [
+        {
+          "Type": 0,
+          "ScheduleId": "7d2cc82f-bf2d-46d6-bf66-6ccac52e14ef",
+          "CallFlowId": "dfabb51e-79f5-4afb-878d-a1ace8b04efc",
+          "Priority": 1,
+          "Enabled": true,
+          "IsInvokedByTenantAdmin": false
+        }
+      ],
+      "DialByNameResourceId": "c43670b0-6aa2-473b-8d42-30ff59fc2be3",
+      "DirectoryLookupScope": {
+        "InclusionScope": null,
+        "ExclusionScope": null,
+        "IsInvokedByTenantAdmin": false
+      },
+      "Status": [
+        {
+          "Status": 2,
+          "Id": "c43670b0-6aa2-473b-8d42-30ff59fc2be3",
+          "Type": 1,
+          "Message": null,
+          "ErrorCode": null,
+          "StatusTimestamp": null,
+          "AuxiliaryData": null,
+          "IsInvokedByTenantAdmin": false
+        }
+      ],
+      "ApplicationInstances": [
+        "0c27b09c-54a2-47f5-a625-adfba0218e7b"
+      ],
+      "AuthorizedUsers": [],
+      "HideAuthorizedUsers": [],
+      "IsInvokedByTenantAdmin": false,
+      "UserNameExtension": "None",
+      "MainlineAttendantEnabled": false
+    },
+    {
+      "Id": "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7",
+      "Identity": "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7",
+      "TenantId": "ade36756-5d88-4577-b102-8bb47b266573",
+      "Name": "Main Line",
+      "LanguageId": "en-US",
+      "VoiceId": "Male",
+      "DefaultCallFlow": {
+        "Id": "a317020d-0ea9-4197-b248-14db86d0573a",
+        "Name": "Main Line Default call flow",
+        "Greetings": [
+          {
+            "ActiveType": 1,
+            "TextToSpeechPrompt": "Thank you for calling Trans Carolina Permits. Our hours of operation are Monday through Thursday 7 am to 4 pm.",
+            "AudioFilePrompt": null
+          }
+        ],
+        "Menu": {
+          "Name": "Business hours call flow",
+          "Prompts": [
+            {
+              "ActiveType": 1,
+              "TextToSpeechPrompt": "For Reception, press 0. To speak to a representative in Spanish, please press 1. For processing and compliance, press 2. For Accounting, press 3. For Tax, press 4. For E-Logs, press 5. If you are interested in our services, please press 6. For Tags and Titles, press 7. To dial by name, press 9.",
+              "AudioFilePrompt": null
+            }
+          ],
+          "MenuOptions": [
+            {
+              "Action": 2,
+              "DtmfResponse": 0,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "ddde72b9-9878-4a34-92cf-ff1a7c8f1023",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 1,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "d8b2870a-4056-40c1-a741-93abb09c60aa",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 2,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "206fe6bf-e568-4132-928e-aa71c87bbe78",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 3,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "3ed27866-2be5-4f34-bfeb-1f71bd7a4abe",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 4,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "b1d90cce-ce29-4b04-884b-a4299a7c6301",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 5,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "c163af0c-3ccb-45a7-8543-4c96e0796952",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 6,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "2de36adc-0b65-438e-befb-6801b4ff68d7",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 7,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "3142d52b-fa5e-4cd8-b9b2-e9be89802e5b",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 9,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "0c27b09c-54a2-47f5-a625-adfba0218e7b",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            }
+          ],
+          "DialByNameEnabled": false,
+          "DirectorySearchMethod": 0,
+          "IsInvokedByTenantAdmin": false
+        },
+        "IsInvokedByTenantAdmin": false,
+        "ForceListenMenuEnabled": false
+      },
+      "Operator": {
+        "EnableSharedVoicemailSystemPromptSuppression": false,
+        "EnableTranscription": false,
+        "Id": "06cacbb0-70ce-4f79-adf8-e1c5da1c78ed",
+        "Type": 6,
+        "IsInvokedByTenantAdmin": false,
+        "CallPriority": 0
+      },
+      "VoiceResponseEnabled": false,
+      "TimeZoneId": "Eastern Standard Time",
+      "CallFlows": [
+        {
+          "Id": "c4298c9a-3558-48b6-b078-2888963819a9",
+          "Name": "Main Line After hours call flow",
+          "Greetings": [
+            {
+              "ActiveType": 1,
+              "TextToSpeechPrompt": "Thank you for calling Trans Carolina Permits.  You have reached us after hours. Please leave a message and we will get back to you as soon as we can.",
+              "AudioFilePrompt": null
+            }
+          ],
+          "Menu": {
+            "Name": "After hours call flow",
+            "Prompts": [],
+            "MenuOptions": [
+              {
+                "Action": 2,
+                "DtmfResponse": 100,
+                "VoiceResponses": [],
+                "CallTarget": {
+                  "EnableSharedVoicemailSystemPromptSuppression": false,
+                  "EnableTranscription": false,
+                  "Id": "dfdf384b-9b98-4d36-b1a6-a9c8947eef24",
+                  "Type": 0,
+                  "IsInvokedByTenantAdmin": false,
+                  "CallPriority": 0
+                },
+                "Prompt": null,
+                "Description": null,
+                "MainlineAttendantTarget": null
+              }
+            ],
+            "DialByNameEnabled": false,
+            "DirectorySearchMethod": 0,
+            "IsInvokedByTenantAdmin": false
+          },
+          "IsInvokedByTenantAdmin": false,
+          "ForceListenMenuEnabled": false
+        }
+      ],
+      "Schedules": [
+        {
+          "Id": "6584ee6f-809a-4db8-8d38-ed9439b895ce",
+          "Name": "After hours Main Line",
+          "Type": 0,
+          "WeeklyRecurrentSchedule": {
+            "MondayHours": [
+              {
+                "Start": {
+                  "Ticks": 252000000000,
+                  "Days": 0,
+                  "Hours": 7,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.2916666666666667,
+                  "TotalHours": 7.0,
+                  "TotalMilliseconds": 25200000.0,
+                  "TotalMicroseconds": 25200000000.0,
+                  "TotalNanoseconds": 25200000000000.0,
+                  "TotalMinutes": 420.0,
+                  "TotalSeconds": 25200.0
+                },
+                "End": {
+                  "Ticks": 612000000000,
+                  "Days": 0,
+                  "Hours": 17,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.7083333333333334,
+                  "TotalHours": 17.0,
+                  "TotalMilliseconds": 61200000.0,
+                  "TotalMicroseconds": 61200000000.0,
+                  "TotalNanoseconds": 61200000000000.0,
+                  "TotalMinutes": 1020.0,
+                  "TotalSeconds": 61200.0
+                }
+              }
+            ],
+            "TuesdayHours": [
+              {
+                "Start": {
+                  "Ticks": 252000000000,
+                  "Days": 0,
+                  "Hours": 7,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.2916666666666667,
+                  "TotalHours": 7.0,
+                  "TotalMilliseconds": 25200000.0,
+                  "TotalMicroseconds": 25200000000.0,
+                  "TotalNanoseconds": 25200000000000.0,
+                  "TotalMinutes": 420.0,
+                  "TotalSeconds": 25200.0
+                },
+                "End": {
+                  "Ticks": 612000000000,
+                  "Days": 0,
+                  "Hours": 17,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.7083333333333334,
+                  "TotalHours": 17.0,
+                  "TotalMilliseconds": 61200000.0,
+                  "TotalMicroseconds": 61200000000.0,
+                  "TotalNanoseconds": 61200000000000.0,
+                  "TotalMinutes": 1020.0,
+                  "TotalSeconds": 61200.0
+                }
+              }
+            ],
+            "WednesdayHours": [
+              {
+                "Start": {
+                  "Ticks": 252000000000,
+                  "Days": 0,
+                  "Hours": 7,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.2916666666666667,
+                  "TotalHours": 7.0,
+                  "TotalMilliseconds": 25200000.0,
+                  "TotalMicroseconds": 25200000000.0,
+                  "TotalNanoseconds": 25200000000000.0,
+                  "TotalMinutes": 420.0,
+                  "TotalSeconds": 25200.0
+                },
+                "End": {
+                  "Ticks": 612000000000,
+                  "Days": 0,
+                  "Hours": 17,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.7083333333333334,
+                  "TotalHours": 17.0,
+                  "TotalMilliseconds": 61200000.0,
+                  "TotalMicroseconds": 61200000000.0,
+                  "TotalNanoseconds": 61200000000000.0,
+                  "TotalMinutes": 1020.0,
+                  "TotalSeconds": 61200.0
+                }
+              }
+            ],
+            "ThursdayHours": [
+              {
+                "Start": {
+                  "Ticks": 252000000000,
+                  "Days": 0,
+                  "Hours": 7,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.2916666666666667,
+                  "TotalHours": 7.0,
+                  "TotalMilliseconds": 25200000.0,
+                  "TotalMicroseconds": 25200000000.0,
+                  "TotalNanoseconds": 25200000000000.0,
+                  "TotalMinutes": 420.0,
+                  "TotalSeconds": 25200.0
+                },
+                "End": {
+                  "Ticks": 612000000000,
+                  "Days": 0,
+                  "Hours": 17,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.7083333333333334,
+                  "TotalHours": 17.0,
+                  "TotalMilliseconds": 61200000.0,
+                  "TotalMicroseconds": 61200000000.0,
+                  "TotalNanoseconds": 61200000000000.0,
+                  "TotalMinutes": 1020.0,
+                  "TotalSeconds": 61200.0
+                }
+              }
+            ],
+            "FridayHours": [],
+            "SaturdayHours": [],
+            "SundayHours": [],
+            "ComplementEnabled": true,
+            "RecurrenceRange": {
+              "Type": "NoEndDate",
+              "StartDateTime": "0001-01-01T00:00:00Z",
+              "EndDateTime": null,
+              "NumberOfOccurrences": null,
+              "IsInvokedByTenantAdmin": false
+            }
+          },
+          "FixedSchedule": null,
+          "AssociatedConfigurationIds": [
+            "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7"
+          ]
+        }
+      ],
+      "CallHandlingAssociations": [
+        {
+          "Type": 0,
+          "ScheduleId": "6584ee6f-809a-4db8-8d38-ed9439b895ce",
+          "CallFlowId": "c4298c9a-3558-48b6-b078-2888963819a9",
+          "Priority": 1,
+          "Enabled": true,
+          "IsInvokedByTenantAdmin": false
+        }
+      ],
+      "DialByNameResourceId": null,
+      "DirectoryLookupScope": {
+        "InclusionScope": null,
+        "ExclusionScope": null,
+        "IsInvokedByTenantAdmin": false
+      },
+      "Status": [],
+      "ApplicationInstances": [
+        "e157f8f2-6232-41fa-97e2-29a7d2bc86c6",
+        "d8384638-8761-4f77-a9e0-d8a31ec26750"
+      ],
+      "AuthorizedUsers": [],
+      "HideAuthorizedUsers": [],
+      "IsInvokedByTenantAdmin": false,
+      "UserNameExtension": "None",
+      "MainlineAttendantEnabled": false
+    }
+  ],
+  "AutoAttendantPermissions": [
+    {
+      "ResourceAccounts": [],
+      "Name": "Dial By Name",
+      "Operators": [],
+      "AuthorizedUsers": null,
+      "AttendantId": "85756f7c-16f2-440f-a599-3af0a7787f7f"
+    },
+    {
+      "AuthorizedUsers": null,
+      "ResourceAccounts": [
+        {
+          "PhoneNumber": "tel:+19198724870",
+          "UserPrincipalName": "000@TransCarolinaPermits.onmicrosoft.com",
+          "DisplayName": "Main Line",
+          "ObjectId": "e157f8f2-6232-41fa-97e2-29a7d2bc86c6"
+        },
+        {
+          "PhoneNumber": "tel:+18008994870",
+          "UserPrincipalName": "012@TransCarolinaPermits.onmicrosoft.com",
+          "DisplayName": "Toll Free",
+          "ObjectId": "d8384638-8761-4f77-a9e0-d8a31ec26750"
+        }
+      ],
+      "Operators": [
+        {
+          "EnableTranscription": false,
+          "Id": "06cacbb0-70ce-4f79-adf8-e1c5da1c78ed",
+          "EnableVoicemailTranscription": null
+        }
+      ],
+      "AttendantId": "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7",
+      "Name": "Main Line"
+    }
+  ],
+  "AutoAttendantSchedules": [
+    {
+      "Name": "After hours Dial By Name",
+      "Type": "Schedule",
+      "FixedSchedule": null,
+      "AttendantName": "Dial By Name",
+      "AttendantId": "85756f7c-16f2-440f-a599-3af0a7787f7f",
+      "ScheduleId": "7d2cc82f-bf2d-46d6-bf66-6ccac52e14ef",
+      "WeeklyRecurrentSchedule": {
+        "MondayHours": [
+          {
+            "Start": {
+              "Ticks": 0,
+              "Days": 0,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.0,
+              "TotalHours": 0.0,
+              "TotalMilliseconds": 0.0,
+              "TotalMicroseconds": 0.0,
+              "TotalNanoseconds": 0.0,
+              "TotalMinutes": 0.0,
+              "TotalSeconds": 0.0
+            },
+            "End": {
+              "Ticks": 864000000000,
+              "Days": 1,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 1.0,
+              "TotalHours": 24.0,
+              "TotalMilliseconds": 86400000.0,
+              "TotalMicroseconds": 86400000000.0,
+              "TotalNanoseconds": 86400000000000.0,
+              "TotalMinutes": 1440.0,
+              "TotalSeconds": 86400.0
+            }
+          }
+        ],
+        "TuesdayHours": [
+          {
+            "Start": {
+              "Ticks": 0,
+              "Days": 0,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.0,
+              "TotalHours": 0.0,
+              "TotalMilliseconds": 0.0,
+              "TotalMicroseconds": 0.0,
+              "TotalNanoseconds": 0.0,
+              "TotalMinutes": 0.0,
+              "TotalSeconds": 0.0
+            },
+            "End": {
+              "Ticks": 864000000000,
+              "Days": 1,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 1.0,
+              "TotalHours": 24.0,
+              "TotalMilliseconds": 86400000.0,
+              "TotalMicroseconds": 86400000000.0,
+              "TotalNanoseconds": 86400000000000.0,
+              "TotalMinutes": 1440.0,
+              "TotalSeconds": 86400.0
+            }
+          }
+        ],
+        "WednesdayHours": [
+          {
+            "Start": {
+              "Ticks": 0,
+              "Days": 0,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.0,
+              "TotalHours": 0.0,
+              "TotalMilliseconds": 0.0,
+              "TotalMicroseconds": 0.0,
+              "TotalNanoseconds": 0.0,
+              "TotalMinutes": 0.0,
+              "TotalSeconds": 0.0
+            },
+            "End": {
+              "Ticks": 864000000000,
+              "Days": 1,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 1.0,
+              "TotalHours": 24.0,
+              "TotalMilliseconds": 86400000.0,
+              "TotalMicroseconds": 86400000000.0,
+              "TotalNanoseconds": 86400000000000.0,
+              "TotalMinutes": 1440.0,
+              "TotalSeconds": 86400.0
+            }
+          }
+        ],
+        "ThursdayHours": [
+          {
+            "Start": {
+              "Ticks": 0,
+              "Days": 0,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.0,
+              "TotalHours": 0.0,
+              "TotalMilliseconds": 0.0,
+              "TotalMicroseconds": 0.0,
+              "TotalNanoseconds": 0.0,
+              "TotalMinutes": 0.0,
+              "TotalSeconds": 0.0
+            },
+            "End": {
+              "Ticks": 864000000000,
+              "Days": 1,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 1.0,
+              "TotalHours": 24.0,
+              "TotalMilliseconds": 86400000.0,
+              "TotalMicroseconds": 86400000000.0,
+              "TotalNanoseconds": 86400000000000.0,
+              "TotalMinutes": 1440.0,
+              "TotalSeconds": 86400.0
+            }
+          }
+        ],
+        "FridayHours": [
+          {
+            "Start": {
+              "Ticks": 0,
+              "Days": 0,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.0,
+              "TotalHours": 0.0,
+              "TotalMilliseconds": 0.0,
+              "TotalMicroseconds": 0.0,
+              "TotalNanoseconds": 0.0,
+              "TotalMinutes": 0.0,
+              "TotalSeconds": 0.0
+            },
+            "End": {
+              "Ticks": 864000000000,
+              "Days": 1,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 1.0,
+              "TotalHours": 24.0,
+              "TotalMilliseconds": 86400000.0,
+              "TotalMicroseconds": 86400000000.0,
+              "TotalNanoseconds": 86400000000000.0,
+              "TotalMinutes": 1440.0,
+              "TotalSeconds": 86400.0
+            }
+          }
+        ],
+        "SaturdayHours": [
+          {
+            "Start": {
+              "Ticks": 0,
+              "Days": 0,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.0,
+              "TotalHours": 0.0,
+              "TotalMilliseconds": 0.0,
+              "TotalMicroseconds": 0.0,
+              "TotalNanoseconds": 0.0,
+              "TotalMinutes": 0.0,
+              "TotalSeconds": 0.0
+            },
+            "End": {
+              "Ticks": 864000000000,
+              "Days": 1,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 1.0,
+              "TotalHours": 24.0,
+              "TotalMilliseconds": 86400000.0,
+              "TotalMicroseconds": 86400000000.0,
+              "TotalNanoseconds": 86400000000000.0,
+              "TotalMinutes": 1440.0,
+              "TotalSeconds": 86400.0
+            }
+          }
+        ],
+        "SundayHours": [
+          {
+            "Start": {
+              "Ticks": 0,
+              "Days": 0,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.0,
+              "TotalHours": 0.0,
+              "TotalMilliseconds": 0.0,
+              "TotalMicroseconds": 0.0,
+              "TotalNanoseconds": 0.0,
+              "TotalMinutes": 0.0,
+              "TotalSeconds": 0.0
+            },
+            "End": {
+              "Ticks": 864000000000,
+              "Days": 1,
+              "Hours": 0,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 1.0,
+              "TotalHours": 24.0,
+              "TotalMilliseconds": 86400000.0,
+              "TotalMicroseconds": 86400000000.0,
+              "TotalNanoseconds": 86400000000000.0,
+              "TotalMinutes": 1440.0,
+              "TotalSeconds": 86400.0
+            }
+          }
+        ],
+        "ComplementEnabled": true,
+        "RecurrenceRange": {
+          "Type": "NoEndDate",
+          "StartDateTime": "0001-01-01T00:00:00Z",
+          "EndDateTime": null,
+          "NumberOfOccurrences": null,
+          "IsInvokedByTenantAdmin": false
+        }
+      }
+    },
+    {
+      "Name": "After hours Main Line",
+      "Type": "Schedule",
+      "FixedSchedule": null,
+      "AttendantName": "Main Line",
+      "AttendantId": "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7",
+      "ScheduleId": "6584ee6f-809a-4db8-8d38-ed9439b895ce",
+      "WeeklyRecurrentSchedule": {
+        "MondayHours": [
+          {
+            "Start": {
+              "Ticks": 252000000000,
+              "Days": 0,
+              "Hours": 7,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.2916666666666667,
+              "TotalHours": 7.0,
+              "TotalMilliseconds": 25200000.0,
+              "TotalMicroseconds": 25200000000.0,
+              "TotalNanoseconds": 25200000000000.0,
+              "TotalMinutes": 420.0,
+              "TotalSeconds": 25200.0
+            },
+            "End": {
+              "Ticks": 612000000000,
+              "Days": 0,
+              "Hours": 17,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.7083333333333334,
+              "TotalHours": 17.0,
+              "TotalMilliseconds": 61200000.0,
+              "TotalMicroseconds": 61200000000.0,
+              "TotalNanoseconds": 61200000000000.0,
+              "TotalMinutes": 1020.0,
+              "TotalSeconds": 61200.0
+            }
+          }
+        ],
+        "TuesdayHours": [
+          {
+            "Start": {
+              "Ticks": 252000000000,
+              "Days": 0,
+              "Hours": 7,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.2916666666666667,
+              "TotalHours": 7.0,
+              "TotalMilliseconds": 25200000.0,
+              "TotalMicroseconds": 25200000000.0,
+              "TotalNanoseconds": 25200000000000.0,
+              "TotalMinutes": 420.0,
+              "TotalSeconds": 25200.0
+            },
+            "End": {
+              "Ticks": 612000000000,
+              "Days": 0,
+              "Hours": 17,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.7083333333333334,
+              "TotalHours": 17.0,
+              "TotalMilliseconds": 61200000.0,
+              "TotalMicroseconds": 61200000000.0,
+              "TotalNanoseconds": 61200000000000.0,
+              "TotalMinutes": 1020.0,
+              "TotalSeconds": 61200.0
+            }
+          }
+        ],
+        "WednesdayHours": [
+          {
+            "Start": {
+              "Ticks": 252000000000,
+              "Days": 0,
+              "Hours": 7,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.2916666666666667,
+              "TotalHours": 7.0,
+              "TotalMilliseconds": 25200000.0,
+              "TotalMicroseconds": 25200000000.0,
+              "TotalNanoseconds": 25200000000000.0,
+              "TotalMinutes": 420.0,
+              "TotalSeconds": 25200.0
+            },
+            "End": {
+              "Ticks": 612000000000,
+              "Days": 0,
+              "Hours": 17,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.7083333333333334,
+              "TotalHours": 17.0,
+              "TotalMilliseconds": 61200000.0,
+              "TotalMicroseconds": 61200000000.0,
+              "TotalNanoseconds": 61200000000000.0,
+              "TotalMinutes": 1020.0,
+              "TotalSeconds": 61200.0
+            }
+          }
+        ],
+        "ThursdayHours": [
+          {
+            "Start": {
+              "Ticks": 252000000000,
+              "Days": 0,
+              "Hours": 7,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.2916666666666667,
+              "TotalHours": 7.0,
+              "TotalMilliseconds": 25200000.0,
+              "TotalMicroseconds": 25200000000.0,
+              "TotalNanoseconds": 25200000000000.0,
+              "TotalMinutes": 420.0,
+              "TotalSeconds": 25200.0
+            },
+            "End": {
+              "Ticks": 612000000000,
+              "Days": 0,
+              "Hours": 17,
+              "Milliseconds": 0,
+              "Microseconds": 0,
+              "Nanoseconds": 0,
+              "Minutes": 0,
+              "Seconds": 0,
+              "TotalDays": 0.7083333333333334,
+              "TotalHours": 17.0,
+              "TotalMilliseconds": 61200000.0,
+              "TotalMicroseconds": 61200000000.0,
+              "TotalNanoseconds": 61200000000000.0,
+              "TotalMinutes": 1020.0,
+              "TotalSeconds": 61200.0
+            }
+          }
+        ],
+        "FridayHours": [],
+        "SaturdayHours": [],
+        "SundayHours": [],
+        "ComplementEnabled": true,
+        "RecurrenceRange": {
+          "Type": "NoEndDate",
+          "StartDateTime": "0001-01-01T00:00:00Z",
+          "EndDateTime": null,
+          "NumberOfOccurrences": null,
+          "IsInvokedByTenantAdmin": false
+        }
+      }
+    }
+  ],
+  "AutoAttendants": [
+    {
+      "Id": "85756f7c-16f2-440f-a599-3af0a7787f7f",
+      "Identity": "85756f7c-16f2-440f-a599-3af0a7787f7f",
+      "TenantId": "ade36756-5d88-4577-b102-8bb47b266573",
+      "Name": "Dial By Name",
+      "LanguageId": "en-US",
+      "VoiceId": "Male",
+      "DefaultCallFlow": {
+        "Id": "871cbb3d-c07e-4838-ae69-bef350db8abd",
+        "Name": "Dial By Name Default call flow",
+        "Greetings": [],
+        "Menu": {
+          "Name": "Business hours call flow",
+          "Prompts": [
+            {
+              "ActiveType": 1,
+              "TextToSpeechPrompt": "Please say a name, or use your dialpad to type a name.",
+              "AudioFilePrompt": null
+            }
+          ],
+          "MenuOptions": [],
+          "DialByNameEnabled": true,
+          "DirectorySearchMethod": 1,
+          "IsInvokedByTenantAdmin": false
+        },
+        "IsInvokedByTenantAdmin": false,
+        "ForceListenMenuEnabled": true
+      },
+      "Operator": null,
+      "VoiceResponseEnabled": true,
+      "TimeZoneId": "Eastern Standard Time",
+      "CallFlows": [
+        {
+          "Id": "dfabb51e-79f5-4afb-878d-a1ace8b04efc",
+          "Name": "Dial By Name After hours call flow",
+          "Greetings": [],
+          "Menu": {
+            "Name": "After hours call flow",
+            "Prompts": [],
+            "MenuOptions": [
+              {
+                "Action": 1,
+                "DtmfResponse": 100,
+                "VoiceResponses": [],
+                "CallTarget": null,
+                "Prompt": null,
+                "Description": null,
+                "MainlineAttendantTarget": null
+              }
+            ],
+            "DialByNameEnabled": false,
+            "DirectorySearchMethod": 0,
+            "IsInvokedByTenantAdmin": false
+          },
+          "IsInvokedByTenantAdmin": false,
+          "ForceListenMenuEnabled": false
+        }
+      ],
+      "Schedules": [
+        {
+          "Id": "7d2cc82f-bf2d-46d6-bf66-6ccac52e14ef",
+          "Name": "After hours Dial By Name",
+          "Type": 0,
+          "WeeklyRecurrentSchedule": {
+            "MondayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "TuesdayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "WednesdayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "ThursdayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "FridayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "SaturdayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "SundayHours": [
+              {
+                "Start": {
+                  "Ticks": 0,
+                  "Days": 0,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.0,
+                  "TotalHours": 0.0,
+                  "TotalMilliseconds": 0.0,
+                  "TotalMicroseconds": 0.0,
+                  "TotalNanoseconds": 0.0,
+                  "TotalMinutes": 0.0,
+                  "TotalSeconds": 0.0
+                },
+                "End": {
+                  "Ticks": 864000000000,
+                  "Days": 1,
+                  "Hours": 0,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 1.0,
+                  "TotalHours": 24.0,
+                  "TotalMilliseconds": 86400000.0,
+                  "TotalMicroseconds": 86400000000.0,
+                  "TotalNanoseconds": 86400000000000.0,
+                  "TotalMinutes": 1440.0,
+                  "TotalSeconds": 86400.0
+                }
+              }
+            ],
+            "ComplementEnabled": true,
+            "RecurrenceRange": {
+              "Type": "NoEndDate",
+              "StartDateTime": "0001-01-01T00:00:00Z",
+              "EndDateTime": null,
+              "NumberOfOccurrences": null,
+              "IsInvokedByTenantAdmin": false
+            }
+          },
+          "FixedSchedule": null,
+          "AssociatedConfigurationIds": [
+            "85756f7c-16f2-440f-a599-3af0a7787f7f"
+          ]
+        }
+      ],
+      "CallHandlingAssociations": [
+        {
+          "Type": 0,
+          "ScheduleId": "7d2cc82f-bf2d-46d6-bf66-6ccac52e14ef",
+          "CallFlowId": "dfabb51e-79f5-4afb-878d-a1ace8b04efc",
+          "Priority": 1,
+          "Enabled": true,
+          "IsInvokedByTenantAdmin": false
+        }
+      ],
+      "DialByNameResourceId": "c43670b0-6aa2-473b-8d42-30ff59fc2be3",
+      "DirectoryLookupScope": {
+        "InclusionScope": null,
+        "ExclusionScope": null,
+        "IsInvokedByTenantAdmin": false
+      },
+      "Status": null,
+      "ApplicationInstances": [
+        "0c27b09c-54a2-47f5-a625-adfba0218e7b"
+      ],
+      "AuthorizedUsers": [],
+      "HideAuthorizedUsers": [],
+      "IsInvokedByTenantAdmin": false,
+      "UserNameExtension": "None",
+      "MainlineAttendantEnabled": false
+    },
+    {
+      "Id": "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7",
+      "Identity": "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7",
+      "TenantId": "ade36756-5d88-4577-b102-8bb47b266573",
+      "Name": "Main Line",
+      "LanguageId": "en-US",
+      "VoiceId": "Male",
+      "DefaultCallFlow": {
+        "Id": "a317020d-0ea9-4197-b248-14db86d0573a",
+        "Name": "Main Line Default call flow",
+        "Greetings": [
+          {
+            "ActiveType": 1,
+            "TextToSpeechPrompt": "Thank you for calling Trans Carolina Permits. Our hours of operation are Monday through Thursday 7 am to 4 pm.",
+            "AudioFilePrompt": null
+          }
+        ],
+        "Menu": {
+          "Name": "Business hours call flow",
+          "Prompts": [
+            {
+              "ActiveType": 1,
+              "TextToSpeechPrompt": "For Reception, press 0. To speak to a representative in Spanish, please press 1. For processing and compliance, press 2. For Accounting, press 3. For Tax, press 4. For E-Logs, press 5. If you are interested in our services, please press 6. For Tags and Titles, press 7. To dial by name, press 9.",
+              "AudioFilePrompt": null
+            }
+          ],
+          "MenuOptions": [
+            {
+              "Action": 2,
+              "DtmfResponse": 0,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "ddde72b9-9878-4a34-92cf-ff1a7c8f1023",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 1,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "d8b2870a-4056-40c1-a741-93abb09c60aa",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 2,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "206fe6bf-e568-4132-928e-aa71c87bbe78",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 3,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "3ed27866-2be5-4f34-bfeb-1f71bd7a4abe",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 4,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "b1d90cce-ce29-4b04-884b-a4299a7c6301",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 5,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "c163af0c-3ccb-45a7-8543-4c96e0796952",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 6,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "2de36adc-0b65-438e-befb-6801b4ff68d7",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 7,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "3142d52b-fa5e-4cd8-b9b2-e9be89802e5b",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            },
+            {
+              "Action": 2,
+              "DtmfResponse": 9,
+              "VoiceResponses": [],
+              "CallTarget": {
+                "EnableSharedVoicemailSystemPromptSuppression": false,
+                "EnableTranscription": false,
+                "Id": "0c27b09c-54a2-47f5-a625-adfba0218e7b",
+                "Type": 3,
+                "IsInvokedByTenantAdmin": false,
+                "CallPriority": 3
+              },
+              "Prompt": null,
+              "Description": null,
+              "MainlineAttendantTarget": null
+            }
+          ],
+          "DialByNameEnabled": false,
+          "DirectorySearchMethod": 0,
+          "IsInvokedByTenantAdmin": false
+        },
+        "IsInvokedByTenantAdmin": false,
+        "ForceListenMenuEnabled": false
+      },
+      "Operator": {
+        "EnableSharedVoicemailSystemPromptSuppression": false,
+        "EnableTranscription": false,
+        "Id": "06cacbb0-70ce-4f79-adf8-e1c5da1c78ed",
+        "Type": 6,
+        "IsInvokedByTenantAdmin": false,
+        "CallPriority": 0
+      },
+      "VoiceResponseEnabled": false,
+      "TimeZoneId": "Eastern Standard Time",
+      "CallFlows": [
+        {
+          "Id": "c4298c9a-3558-48b6-b078-2888963819a9",
+          "Name": "Main Line After hours call flow",
+          "Greetings": [
+            {
+              "ActiveType": 1,
+              "TextToSpeechPrompt": "Thank you for calling Trans Carolina Permits.  You have reached us after hours. Please leave a message and we will get back to you as soon as we can.",
+              "AudioFilePrompt": null
+            }
+          ],
+          "Menu": {
+            "Name": "After hours call flow",
+            "Prompts": [],
+            "MenuOptions": [
+              {
+                "Action": 2,
+                "DtmfResponse": 100,
+                "VoiceResponses": [],
+                "CallTarget": {
+                  "EnableSharedVoicemailSystemPromptSuppression": false,
+                  "EnableTranscription": false,
+                  "Id": "dfdf384b-9b98-4d36-b1a6-a9c8947eef24",
+                  "Type": 0,
+                  "IsInvokedByTenantAdmin": false,
+                  "CallPriority": 0
+                },
+                "Prompt": null,
+                "Description": null,
+                "MainlineAttendantTarget": null
+              }
+            ],
+            "DialByNameEnabled": false,
+            "DirectorySearchMethod": 0,
+            "IsInvokedByTenantAdmin": false
+          },
+          "IsInvokedByTenantAdmin": false,
+          "ForceListenMenuEnabled": false
+        }
+      ],
+      "Schedules": [
+        {
+          "Id": "6584ee6f-809a-4db8-8d38-ed9439b895ce",
+          "Name": "After hours Main Line",
+          "Type": 0,
+          "WeeklyRecurrentSchedule": {
+            "MondayHours": [
+              {
+                "Start": {
+                  "Ticks": 252000000000,
+                  "Days": 0,
+                  "Hours": 7,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.2916666666666667,
+                  "TotalHours": 7.0,
+                  "TotalMilliseconds": 25200000.0,
+                  "TotalMicroseconds": 25200000000.0,
+                  "TotalNanoseconds": 25200000000000.0,
+                  "TotalMinutes": 420.0,
+                  "TotalSeconds": 25200.0
+                },
+                "End": {
+                  "Ticks": 612000000000,
+                  "Days": 0,
+                  "Hours": 17,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.7083333333333334,
+                  "TotalHours": 17.0,
+                  "TotalMilliseconds": 61200000.0,
+                  "TotalMicroseconds": 61200000000.0,
+                  "TotalNanoseconds": 61200000000000.0,
+                  "TotalMinutes": 1020.0,
+                  "TotalSeconds": 61200.0
+                }
+              }
+            ],
+            "TuesdayHours": [
+              {
+                "Start": {
+                  "Ticks": 252000000000,
+                  "Days": 0,
+                  "Hours": 7,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.2916666666666667,
+                  "TotalHours": 7.0,
+                  "TotalMilliseconds": 25200000.0,
+                  "TotalMicroseconds": 25200000000.0,
+                  "TotalNanoseconds": 25200000000000.0,
+                  "TotalMinutes": 420.0,
+                  "TotalSeconds": 25200.0
+                },
+                "End": {
+                  "Ticks": 612000000000,
+                  "Days": 0,
+                  "Hours": 17,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.7083333333333334,
+                  "TotalHours": 17.0,
+                  "TotalMilliseconds": 61200000.0,
+                  "TotalMicroseconds": 61200000000.0,
+                  "TotalNanoseconds": 61200000000000.0,
+                  "TotalMinutes": 1020.0,
+                  "TotalSeconds": 61200.0
+                }
+              }
+            ],
+            "WednesdayHours": [
+              {
+                "Start": {
+                  "Ticks": 252000000000,
+                  "Days": 0,
+                  "Hours": 7,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.2916666666666667,
+                  "TotalHours": 7.0,
+                  "TotalMilliseconds": 25200000.0,
+                  "TotalMicroseconds": 25200000000.0,
+                  "TotalNanoseconds": 25200000000000.0,
+                  "TotalMinutes": 420.0,
+                  "TotalSeconds": 25200.0
+                },
+                "End": {
+                  "Ticks": 612000000000,
+                  "Days": 0,
+                  "Hours": 17,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.7083333333333334,
+                  "TotalHours": 17.0,
+                  "TotalMilliseconds": 61200000.0,
+                  "TotalMicroseconds": 61200000000.0,
+                  "TotalNanoseconds": 61200000000000.0,
+                  "TotalMinutes": 1020.0,
+                  "TotalSeconds": 61200.0
+                }
+              }
+            ],
+            "ThursdayHours": [
+              {
+                "Start": {
+                  "Ticks": 252000000000,
+                  "Days": 0,
+                  "Hours": 7,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.2916666666666667,
+                  "TotalHours": 7.0,
+                  "TotalMilliseconds": 25200000.0,
+                  "TotalMicroseconds": 25200000000.0,
+                  "TotalNanoseconds": 25200000000000.0,
+                  "TotalMinutes": 420.0,
+                  "TotalSeconds": 25200.0
+                },
+                "End": {
+                  "Ticks": 612000000000,
+                  "Days": 0,
+                  "Hours": 17,
+                  "Milliseconds": 0,
+                  "Microseconds": 0,
+                  "Nanoseconds": 0,
+                  "Minutes": 0,
+                  "Seconds": 0,
+                  "TotalDays": 0.7083333333333334,
+                  "TotalHours": 17.0,
+                  "TotalMilliseconds": 61200000.0,
+                  "TotalMicroseconds": 61200000000.0,
+                  "TotalNanoseconds": 61200000000000.0,
+                  "TotalMinutes": 1020.0,
+                  "TotalSeconds": 61200.0
+                }
+              }
+            ],
+            "FridayHours": [],
+            "SaturdayHours": [],
+            "SundayHours": [],
+            "ComplementEnabled": true,
+            "RecurrenceRange": {
+              "Type": "NoEndDate",
+              "StartDateTime": "0001-01-01T00:00:00Z",
+              "EndDateTime": null,
+              "NumberOfOccurrences": null,
+              "IsInvokedByTenantAdmin": false
+            }
+          },
+          "FixedSchedule": null,
+          "AssociatedConfigurationIds": [
+            "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7"
+          ]
+        }
+      ],
+      "CallHandlingAssociations": [
+        {
+          "Type": 0,
+          "ScheduleId": "6584ee6f-809a-4db8-8d38-ed9439b895ce",
+          "CallFlowId": "c4298c9a-3558-48b6-b078-2888963819a9",
+          "Priority": 1,
+          "Enabled": true,
+          "IsInvokedByTenantAdmin": false
+        }
+      ],
+      "DialByNameResourceId": null,
+      "DirectoryLookupScope": {
+        "InclusionScope": null,
+        "ExclusionScope": null,
+        "IsInvokedByTenantAdmin": false
+      },
+      "Status": null,
+      "ApplicationInstances": [
+        "e157f8f2-6232-41fa-97e2-29a7d2bc86c6",
+        "d8384638-8761-4f77-a9e0-d8a31ec26750"
+      ],
+      "AuthorizedUsers": [],
+      "HideAuthorizedUsers": [],
+      "IsInvokedByTenantAdmin": false,
+      "UserNameExtension": "None",
+      "MainlineAttendantEnabled": false
+    }
+  ],
+  "AutoAttendantStatistics": [
+    {
+      "InclusionScopeGroups": 0,
+      "SchedulesCount": 1,
+      "ExclusionScopeGroups": 0,
+      "LanguageId": "en-US",
+      "AttendantId": "85756f7c-16f2-440f-a599-3af0a7787f7f",
+      "Name": "Dial By Name",
+      "CallHandlingAssociationsCount": 1,
+      "DefaultCallFlow": {
+        "Name": "Dial By Name Default call flow",
+        "MenuPrompt": 1,
+        "MenuOptionsCount": 0
+      },
+      "TimeZoneId": "Eastern Standard Time",
+      "VoiceId": "Male",
+      "CallFlowsCount": 1
+    },
+    {
+      "InclusionScopeGroups": 0,
+      "SchedulesCount": 1,
+      "ExclusionScopeGroups": 0,
+      "LanguageId": "en-US",
+      "AttendantId": "61a7f72c-a191-4a7e-8c79-5117ae6b5ec7",
+      "Name": "Main Line",
+      "CallHandlingAssociationsCount": 1,
+      "DefaultCallFlow": {
+        "Name": "Main Line Default call flow",
+        "MenuPrompt": 1,
+        "MenuOptionsCount": 9
+      },
+      "TimeZoneId": "Eastern Standard Time",
+      "VoiceId": "Male",
+      "CallFlowsCount": 1
+    }
+  ],
+  "HolidaySchedules": [
+    {
+      "Id": "7df26347-7070-45fc-8f1f-665dc9e33eea",
+      "Name": "Christmas",
+      "Type": 1,
+      "WeeklyRecurrentSchedule": {
+        "MondayHours": [],
+        "TuesdayHours": [],
+        "WednesdayHours": [],
+        "ThursdayHours": [],
+        "FridayHours": [],
+        "SaturdayHours": [],
+        "SundayHours": [],
+        "ComplementEnabled": null,
+        "RecurrenceRange": {
+          "Type": null,
+          "StartDateTime": null,
+          "EndDateTime": null,
+          "NumberOfOccurrences": null,
+          "IsInvokedByTenantAdmin": false
+        }
+      },
+      "FixedSchedule": {
+        "DateTimeRanges": [
+          {
+            "Start": "2025-12-19T00:00:00",
+            "End": "2025-12-28T00:00:00"
+          }
+        ]
+      },
+      "AssociatedConfigurationIds": []
+    },
+    {
+      "Id": "4084fffd-cfc4-4405-a98b-36ea565a17fc",
+      "Name": "New Years Day",
+      "Type": 1,
+      "WeeklyRecurrentSchedule": {
+        "MondayHours": [],
+        "TuesdayHours": [],
+        "WednesdayHours": [],
+        "ThursdayHours": [],
+        "FridayHours": [],
+        "SaturdayHours": [],
+        "SundayHours": [],
+        "ComplementEnabled": null,
+        "RecurrenceRange": {
+          "Type": null,
+          "StartDateTime": null,
+          "EndDateTime": null,
+          "NumberOfOccurrences": null,
+          "IsInvokedByTenantAdmin": false
+        }
+      },
+      "FixedSchedule": {
+        "DateTimeRanges": [
+          {
+            "Start": "2026-01-01T00:00:00",
+            "End": "2026-01-02T00:00:00"
+          }
+        ]
+      },
+      "AssociatedConfigurationIds": []
+    },
+    {
+      "Id": "b5a408f8-e0c8-416d-807b-b05baedab1ed",
+      "Name": "Thanksgiving",
+      "Type": 1,
+      "WeeklyRecurrentSchedule": {
+        "MondayHours": [],
+        "TuesdayHours": [],
+        "WednesdayHours": [],
+        "ThursdayHours": [],
+        "FridayHours": [],
+        "SaturdayHours": [],
+        "SundayHours": [],
+        "ComplementEnabled": null,
+        "RecurrenceRange": {
+          "Type": null,
+          "StartDateTime": null,
+          "EndDateTime": null,
+          "NumberOfOccurrences": null,
+          "IsInvokedByTenantAdmin": false
+        }
+      },
+      "FixedSchedule": {
+        "DateTimeRanges": [
+          {
+            "Start": "2025-11-27T00:00:00",
+            "End": "2025-11-30T00:00:00"
+          }
+        ]
+      },
+      "AssociatedConfigurationIds": []
+    },
+    {
+      "Id": "e5d65568-a887-4812-970f-ff40cbbbd2d3",
+      "Name": "Veterans Day",
+      "Type": 1,
+      "WeeklyRecurrentSchedule": {
+        "MondayHours": [],
+        "TuesdayHours": [],
+        "WednesdayHours": [],
+        "ThursdayHours": [],
+        "FridayHours": [],
+        "SaturdayHours": [],
+        "SundayHours": [],
+        "ComplementEnabled": null,
+        "RecurrenceRange": {
+          "Type": null,
+          "StartDateTime": null,
+          "EndDateTime": null,
+          "NumberOfOccurrences": null,
+          "IsInvokedByTenantAdmin": false
+        }
+      },
+      "FixedSchedule": {
+        "DateTimeRanges": [
+          {
+            "Start": "2025-11-11T00:00:00",
+            "End": "2025-11-12T00:00:00"
+          }
+        ]
+      },
+      "AssociatedConfigurationIds": []
+    }
+  ]
+}

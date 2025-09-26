@@ -1,0 +1,427 @@
+{
+  "VoiceRoutingPolicies": [
+    {
+      "OnlinePstnUsages": [],
+      "Description": null,
+      "RouteType": "BYOT",
+      "Key": {
+        "ScopeClass": "Global",
+        "SchemaId": {
+          "XName": {
+            "name": "{urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008}OnlineVoiceRoutingPolicy"
+          }
+        },
+        "AuthorityId": {
+          "Class": "Tenant",
+          "InstanceId": "ade36756-5d88-4577-b102-8bb47b266573",
+          "XmlRoot": {
+            "name": "{urn:schema:Microsoft.Rtc.Management.ScopeFramework.2008}AuthorityId"
+          }
+        },
+        "DefaultXml": {
+          "SchemaId": {
+            "XName": {
+              "name": "{urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008}OnlineVoiceRoutingPolicy"
+            }
+          },
+          "Data": {
+            "OnlineVoiceRoutingPolicy": {
+              "@xmlns": "urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008",
+              "OnlinePstnUsages": null
+            }
+          },
+          "ConfigObject": null,
+          "Signature": "00000000-0000-0000-0000-000000000000",
+          "IsModified": true
+        },
+        "XmlRoot": {
+          "name": "{urn:schema:Microsoft.Rtc.Management.ScopeFramework.2008}AnchoredXmlKey"
+        }
+      },
+      "Identity": "Global",
+      "ConfigMetadata": {
+        "Authority": "Tenant"
+      },
+      "ConfigId": "Global"
+    }
+  ],
+  "TenantDialPlans": [
+    {
+      "Description": null,
+      "NormalizationRules": [],
+      "ExternalAccessPrefix": null,
+      "SimpleName": "DefaultTenantDialPlan",
+      "OptimizeDeviceDialing": false,
+      "Key": {
+        "ScopeClass": "Global",
+        "SchemaId": {
+          "XName": {
+            "name": "{urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008}TenantDialPlan"
+          }
+        },
+        "AuthorityId": {
+          "Class": "Tenant",
+          "InstanceId": "ade36756-5d88-4577-b102-8bb47b266573",
+          "XmlRoot": {
+            "name": "{urn:schema:Microsoft.Rtc.Management.ScopeFramework.2008}AuthorityId"
+          }
+        },
+        "DefaultXml": {
+          "SchemaId": {
+            "XName": {
+              "name": "{urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008}TenantDialPlan"
+            }
+          },
+          "Data": {
+            "TenantDialPlan": {
+              "@Name": "DefaultTenantDialPlan",
+              "@xmlns": "urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008",
+              "NormalizationRules": null
+            }
+          },
+          "ConfigObject": null,
+          "Signature": "00000000-0000-0000-0000-000000000000",
+          "IsModified": true
+        },
+        "XmlRoot": {
+          "name": "{urn:schema:Microsoft.Rtc.Management.ScopeFramework.2008}AnchoredXmlKey"
+        }
+      },
+      "Identity": "Global",
+      "ConfigMetadata": {
+        "Authority": "Tenant"
+      },
+      "ConfigId": "Global"
+    }
+  ],
+  "PhoneNumberAssignments": [
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "VoiceApplicationAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "d8384638-8761-4f77-a9e0-d8a31ec26750",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+18008994870",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "VoiceApplicationAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "e157f8f2-6232-41fa-97e2-29a7d2bc86c6",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19198724870",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "fde2ce81-7155-46ac-b542-24f4079eb125",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081461",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "c96ac681-3d1e-46de-912e-b9e86ba0e280",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081486",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "dfdf384b-9b98-4d36-b1a6-a9c8947eef24",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081491",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "51d0ce52-6f18-4260-8318-42712d147a04",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081507",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "66e94c6a-00a0-4e2f-b0e4-e8d0164acbfc",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081512",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "VoiceApplicationAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "6f9ea5af-5735-42af-ab7a-38ff0ff7e440",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081517",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "9d58f5f8-3f2f-4afb-90ef-353c9563c8dc",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081520",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "7cc290bf-6773-460f-9cd1-cd749de68e1f",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081524",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "16d1dc2d-093d-49e4-b38a-d2d61d969890",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081528",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "2c9e9a22-0cf7-4fb5-b6a5-cd7d09295c9b",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081536",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "46f72cc6-6e7b-4212-8037-6065b62d4cd9",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081538",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "39acb1f8-e546-4ef4-8bb0-37c71bea6ecb",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081540",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "90866c1d-fc34-4f07-8e99-a1f3ee66cc02",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081541",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "4749c48c-fbb8-44d2-a610-dae7a0443dd4",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081545",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "6baf8289-aa4f-4097-9924-a907f5cc4620",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081549",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "79753320-b310-4633-bfd3-e47467defc96",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081568",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "d4156506-ec1c-4907-99e4-be910e6bbe32",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081585",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "8a458504-7ba7-430a-95c0-d4ca3e358bdf",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081595",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "5661a6e8-808f-43a3-abd8-166c36a19b15",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081599",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "9e0b7856-ab27-44b2-862c-9ab99e0d544f",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081602",
+      "CapabilitiesVoiceApplication": null
+    },
+    {
+      "PlaceName": null,
+      "PstnAssignmentStatus": "UserAssigned",
+      "AcquisitionDate": null,
+      "AssignedPstnTargetId": "8e7ae665-6b18-4682-b82c-e2ccb4646654",
+      "NumberType": "CallingPlan",
+      "CapabilitiesUser": null,
+      "ActivationState": "Activated",
+      "TelephoneNumber": "+19843081606",
+      "CapabilitiesVoiceApplication": null
+    }
+  ],
+  "MediaConfigurations": [],
+  "SBCConfigurations": [],
+  "PSTNUsages": [
+    {
+      "Usage": [],
+      "Key": {
+        "ScopeClass": "Global",
+        "SchemaId": {
+          "XName": {
+            "name": "{urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008}OnlinePstnUsages"
+          }
+        },
+        "AuthorityId": {
+          "Class": "Tenant",
+          "InstanceId": "ade36756-5d88-4577-b102-8bb47b266573",
+          "XmlRoot": {
+            "name": "{urn:schema:Microsoft.Rtc.Management.ScopeFramework.2008}AuthorityId"
+          }
+        },
+        "DefaultXml": {
+          "SchemaId": {
+            "XName": {
+              "name": "{urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008}OnlinePstnUsages"
+            }
+          },
+          "Data": {
+            "OnlinePstnUsages": {
+              "@xmlns": "urn:schema:Microsoft.Rtc.Management.Policy.Voice.2008"
+            }
+          },
+          "ConfigObject": null,
+          "Signature": "00000000-0000-0000-0000-000000000000",
+          "IsModified": true
+        },
+        "XmlRoot": {
+          "name": "{urn:schema:Microsoft.Rtc.Management.ScopeFramework.2008}AnchoredXmlKey"
+        }
+      },
+      "Identity": "Global",
+      "ConfigMetadata": {
+        "Authority": "Tenant"
+      },
+      "ConfigId": "Global"
+    }
+  ],
+  "NumberPorting": [],
+  "VoiceRoutes": [
+    {
+      "Description": null,
+      "NumberPattern": "^(\\+1[0-9]{10})$",
+      "OnlinePstnUsages": [],
+      "OnlinePstnGatewayList": [],
+      "BridgeSourcePhoneNumber": null,
+      "Name": "LocalRoute",
+      "Identity": "LocalRoute",
+      "Priority": 0,
+      "ConfigMetadata": {
+        "Authority": "Tenant"
+      }
+    }
+  ],
+  "PSTNGateways": [],
+  "VoiceNormalizationRules": [],
+  "TrunkConfigurations": [],
+  "CallRouting": [
+    {
+      "Priority": 0,
+      "RouteType": "Unknown",
+      "PstnGateways": null,
+      "RouteName": "LocalRoute",
+      "PstnUsages": null,
+      "Description": null,
+      "NumberPattern": "^(\\+1[0-9]{10})$"
+    }
+  ]
+}

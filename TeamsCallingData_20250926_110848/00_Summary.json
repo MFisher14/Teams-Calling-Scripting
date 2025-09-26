@@ -1,0 +1,106 @@
+{
+  "CollectionDate": "2025-09-26 11:09:33 UTC",
+  "DataSummary": {
+    "UserSettings": {
+      "Keys": [
+        "LineURIAssignments",
+        "UserLocationAssignments",
+        "OnlineVoiceUsers",
+        "VoiceUserSettings",
+        "UsersWithDirectRouting",
+        "PolicyAssignmentsSummary",
+        "UserCallingSettings",
+        "UsersWithCallingPlan",
+        "UserPolicyAssignments"
+      ],
+      "HasData": true
+    },
+    "AutoAttendants": {
+      "Keys": [
+        "AutoAttendantDetails",
+        "AutoAttendantPermissions",
+        "AutoAttendantSchedules",
+        "AutoAttendants",
+        "AutoAttendantStatistics",
+        "HolidaySchedules"
+      ],
+      "HasData": true
+    },
+    "EmergencySettings": {
+      "Keys": [
+        "EmergencyAddresses",
+        "EmergencyCallingPolicies",
+        "NetworkSites",
+        "LocationInformationService",
+        "EmergencyLocations",
+        "UserEmergencyAssignments",
+        "EmergencyCallRoutingPolicies",
+        "TrustedIPAddresses",
+        "EmergencyNumbers"
+      ],
+      "HasData": true
+    },
+    "VoiceRouting": {
+      "Keys": [
+        "VoiceRoutingPolicies",
+        "TenantDialPlans",
+        "PhoneNumberAssignments",
+        "MediaConfigurations",
+        "SBCConfigurations",
+        "PSTNUsages",
+        "NumberPorting",
+        "VoiceRoutes",
+        "PSTNGateways",
+        "VoiceNormalizationRules",
+        "TrunkConfigurations",
+        "CallRouting"
+      ],
+      "HasData": true
+    },
+    "ComplianceSettings": {
+      "Keys": [
+        "PrivacySettings",
+        "AuditSettings",
+        "ComplianceRecordingPolicies",
+        "CallRecordingPolicies",
+        "CallAnalyticsSettings",
+        "SecuritySettings",
+        "DLPPolicies",
+        "DataRetentionSettings",
+        "RecordingApplications",
+        "RetentionPolicies",
+        "ComplianceNotifications",
+        "InformationBarrierPolicies"
+      ],
+      "HasData": true
+    },
+    "CallQueues": {
+      "Keys": [
+        "HuntGroups",
+        "CallQueuePermissions",
+        "CallQueueStatistics",
+        "CallQueueDetails",
+        "CallQueues"
+      ],
+      "HasData": true
+    },
+    "CallingPolicies": {
+      "Keys": [
+        "TeamsNetworkConfiguration",
+        "TeamsCallingPolicies",
+        "CallingLineIdentityPolicies",
+        "PrivacyPolicies",
+        "TeamsIPPhonePolicies",
+        "TeamsCallingRegion",
+        "VoiceApplications",
+        "TeamsBranchSurvivabilityPolicy",
+        "TeamsDialoutPolicy"
+      ],
+      "HasData": true
+    }
+  },
+  "TenantInfo": {
+    "TenantId": "ade36756-5d88-4577-b102-8bb47b266573",
+    "DisplayName": "Trans Carolina Permits"
+  }
+}

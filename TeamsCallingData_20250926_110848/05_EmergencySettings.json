@@ -1,0 +1,128 @@
+{
+  "EmergencyAddresses": [
+    {
+      "City": "Raleigh",
+      "CityAlias": null,
+      "CivicAddressId": "40b4c200-2f28-11ef-ab19-85ed4948ce14",
+      "CompanyName": "Trans Carolina Permits",
+      "CompanyTaxId": null,
+      "Confidence": null,
+      "CountryOrRegion": "US",
+      "CountyOrDistrict": "US",
+      "Description": "Main Office",
+      "Elin": null,
+      "HouseNumber": "2940",
+      "HouseNumberSuffix": null,
+      "IsDefault": true,
+      "Latitude": "35.8184",
+      "Location": null,
+      "LocationId": "076ffac3-d4e4-4553-989b-16989c7e4583",
+      "Longitude": "-78.58854",
+      "NumberOfTelephoneNumbers": -1,
+      "NumberOfVoiceUsers": -1,
+      "PartnerId": "00000000-0000-0000-0000-000000000000",
+      "PostDirectional": null,
+      "PostalCode": "27604",
+      "PreDirectional": null,
+      "StateOrProvince": "NC",
+      "StreetName": "Trawick Road",
+      "StreetSuffix": null,
+      "TenantId": "ade36756-5d88-4577-b102-8bb47b266573",
+      "ValidationStatus": "Validated"
+    }
+  ],
+  "EmergencyCallingPolicies": [
+    {
+      "Identity": "Global",
+      "ExtendedNotifications": [],
+      "NotificationGroup": null,
+      "NotificationDialOutNumber": null,
+      "ExternalLocationLookupMode": 0,
+      "NotificationMode": null,
+      "EnhancedEmergencyServiceDisclaimer": null,
+      "Description": null
+    }
+  ],
+  "NetworkSites": [],
+  "LocationInformationService": [
+    {
+      "WirelessAccessPoints": [],
+      "Ports": [],
+      "Subnets": [],
+      "Switches": []
+    }
+  ],
+  "EmergencyLocations": [
+    {
+      "IsValidated": null,
+      "ValidationStatus": "Validated",
+      "Latitude": "35.8184",
+      "PreDirectional": null,
+      "CompanyName": "Trans Carolina Permits",
+      "PostalCode": "27604",
+      "CompanyTaxId": null,
+      "City": "Raleigh",
+      "Description": "Main Office",
+      "StreetName": "Trawick Road",
+      "Longitude": "-78.58854",
+      "CountryOrRegion": "US",
+      "PostDirectional": null,
+      "Address": null,
+      "StateOrProvince": "NC",
+      "HouseNumberSuffix": null,
+      "LocationId": "076ffac3-d4e4-4553-989b-16989c7e4583",
+      "Elin": null,
+      "HouseNumber": "2940",
+      "StreetSuffix": null
+    }
+  ],
+  "UserEmergencyAssignments": [],
+  "EmergencyCallRoutingPolicies": [
+    {
+      "EmergencyNumbers": [],
+      "AllowEnhancedEmergencyServices": false,
+      "Description": null,
+      "Key": {
+        "ScopeClass": "Global",
+        "SchemaId": {
+          "XName": {
+            "name": "{urn:schema:Microsoft.Rtc.Management.Policy.Teams.2017}TeamsEmergencyCallRoutingPolicy"
+          }
+        },
+        "AuthorityId": {
+          "Class": "Tenant",
+          "InstanceId": "ade36756-5d88-4577-b102-8bb47b266573",
+          "XmlRoot": {
+            "name": "{urn:schema:Microsoft.Rtc.Management.ScopeFramework.2008}AuthorityId"
+          }
+        },
+        "DefaultXml": {
+          "SchemaId": {
+            "XName": {
+              "name": "{urn:schema:Microsoft.Rtc.Management.Policy.Teams.2017}TeamsEmergencyCallRoutingPolicy"
+            }
+          },
+          "Data": {
+            "TeamsEmergencyCallRoutingPolicy": {
+              "@xmlns": "urn:schema:Microsoft.Rtc.Management.Policy.Teams.2017",
+              "EmergencyNumbers": null
+            }
+          },
+          "ConfigObject": null,
+          "Signature": "00000000-0000-0000-0000-000000000000",
+          "IsModified": true
+        },
+        "XmlRoot": {
+          "name": "{urn:schema:Microsoft.Rtc.Management.ScopeFramework.2008}AnchoredXmlKey"
+        }
+      },
+      "Identity": "Global",
+      "ConfigMetadata": {
+        "Authority": "Tenant"
+      },
+      "ConfigId": "Global"
+    }
+  ],
+  "TrustedIPAddresses": [],
+  "EmergencyNumbers": []
+}
