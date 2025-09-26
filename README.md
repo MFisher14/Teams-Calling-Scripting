@@ -12,6 +12,10 @@ This comprehensive PowerShell solution collects all Microsoft Teams calling conf
 - **🎯 Flexible Filtering**: Focus on specific phone numbers or collect all data
 - **⚡ Automated Workflow**: Seamless integration from data collection to PDF generation
 - **🔍 Advanced Analysis**: Step-by-step visual call routing with detailed configuration data
+- **👥 Queue User Details**: Shows which users are assigned to each call queue
+- **🎯 Flexible Filtering**: Focus on specific phone numbers or collect all data
+- **⚡ Automated Workflow**: Seamless integration from data collection to PDF generation
+- **🔍 Advanced Analysis**: Step-by-step visual call routing with detailed configuration data
 
 ## 🚀 Quick Start
 
@@ -54,7 +58,7 @@ pip install playwright && playwright install chromium
 ## 📁 Project Structure
 
 ```
-TCP Calling Issues/
+TMC Calling Issues/
 ├── README.md                           # This file - complete documentation
 ├── Gather-Teams-Calling-Data.ps1      # Main orchestration script
 ├── Initial_Issue_Log.md                # Project background and issues
@@ -545,7 +549,9 @@ foreach ($tenant in $tenants) {
 
 *This tool suite is designed for Microsoft Teams calling configuration analysis and troubleshooting. It is provided as-is for educational and professional use. Always follow your organization's security and compliance policies when collecting and analyzing Teams configuration data.*
 
-**Created for TCP Calling Issues analysis and Teams administration tasks.**
+## About
+
+**Created for TMC Calling Issues analysis and Teams administration tasks.**
 
 ## System Requirements
 
@@ -785,4 +791,4 @@ The script outputs detailed progress information to the console. Redirect to a f
 
 ---
 
-*This tool is designed for TCP Calling Issues analysis and Teams calling configuration auditing.*
+*This tool is designed for TMC Calling Issues analysis and Teams calling configuration auditing.*

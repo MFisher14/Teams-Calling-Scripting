@@ -40,7 +40,7 @@
     .\Gather-Teams-Calling-Data.ps1 -GenerateCallFlowMaps -CallFlowFilterNumbers "+1984308", "+1800" -GeneratePDF
     
 .NOTES
-    Author: Generated for TCP Calling Issues Analysis
+    Author: Generated for TMC Calling Issues Analysis
     Date: September 26, 2025
     Requires: MicrosoftTeams PowerShell module and appropriate admin permissions
 #>
@@ -234,10 +234,11 @@ function New-SummaryReport {
 function Test-CallFlowPrerequisites {
     $callFlowScript = Join-Path $ModulesPath "Generate-CallFlowMaps-Simple.ps1"
     $pdfGenerator = Join-Path $ModulesPath "pdf_generator.py"
+    $generatePdfScript = Join-Path $PSScriptRoot "generate_pdfs.py"
     
     $prerequisites = @{
         CallFlowScript = Test-Path $callFlowScript
-        PdfGenerator = Test-Path $pdfGenerator
+        PdfGenerator = (Test-Path $pdfGenerator) -or (Test-Path $generatePdfScript)
         Python = $false
         Playwright = $false
     }
@@ -333,69 +334,6 @@ function Invoke-CallFlowGeneration {
         
         if ($process.ExitCode -eq 0) {
             Write-Host "✓ HTML call flow maps generated successfully" -ForegroundColor Green
-            
-            # Generate PDFs if requested and prerequisites are met
-            if ($GeneratePDF) {
-                if ($prereqs.Python -and $prereqs.Playwright) {
-                    Write-Host "Generating PDF files..." -ForegroundColor Yellow
-                    
-                    # Find the most recent call flow output directory
-                    $callFlowDirs = Get-ChildItem -Path $PSScriptRoot -Directory -Name "CallFlowMaps_*" | Sort-Object -Descending
-                    if ($callFlowDirs.Count -gt 0) {
-                        $latestCallFlowDir = Join-Path $PSScriptRoot $callFlowDirs[0]
-                        $individualDir = Join-Path $latestCallFlowDir "Individual"
-                        $summaryDir = Join-Path $latestCallFlowDir "Summary"
-                        $pdfDir = Join-Path $latestCallFlowDir "PDF"
-                        
-                        # Generate PDFs using Python script
-                        $pdfGenerator = Join-Path $ModulesPath "pdf_generator.py"
-                        
-                        # Determine Python command
-                        $pythonCmd = if ($IsWindows) { "python" } else { "python3" }
-                        
-                        # Convert Individual HTML files
-                        if (Test-Path $individualDir) {
-                            $individualPdfDir = Join-Path $pdfDir "Individual"
-                            $pdfProcess = Start-Process -FilePath $pythonCmd -ArgumentList "`"$pdfGenerator`"", "`"$individualDir`"", "-o", "`"$individualPdfDir`"" -Wait -NoNewWindow -PassThru
-                            
-                            if ($pdfProcess.ExitCode -eq 0) {
-                                Write-Host "✓ Individual call flow PDFs generated" -ForegroundColor Green
-                            } else {
-                                Write-Warning "Individual PDF generation completed with warnings"
-                            }
-                        }
-                        
-                        # Convert Summary HTML files
-                        if (Test-Path $summaryDir) {
-                            $summaryPdfDir = Join-Path $pdfDir "Summary"
-                            $pdfProcess = Start-Process -FilePath $pythonCmd -ArgumentList "`"$pdfGenerator`"", "`"$summaryDir`"", "-o", "`"$summaryPdfDir`"" -Wait -NoNewWindow -PassThru
-                            
-                            if ($pdfProcess.ExitCode -eq 0) {
-                                Write-Host "✓ Summary dashboard PDF generated" -ForegroundColor Green
-                            } else {
-                                Write-Warning "Summary PDF generation completed with warnings"
-                            }
-                        }
-                        
-                        Write-Host "✓ PDF generation complete" -ForegroundColor Green
-                    } else {
-                        Write-Warning "Could not find call flow output directory for PDF generation"
-                    }
-                } else {
-                    Write-Warning "PDF generation requested but prerequisites not met:"
-                    if (-not $prereqs.Python) {
-                        Write-Warning "  - Python not available. Install Python 3.7+ to enable PDF generation"
-                    }
-                    if (-not $prereqs.Playwright) {
-                        Write-Warning "  - Playwright not available. Install with: pip install playwright"
-                        Write-Warning "  - Then install browsers with: playwright install"
-                    }
-                    if (-not $prereqs.PdfGenerator) {
-                        Write-Warning "  - PDF generator script not found"
-                    }
-                }
-            }
-            
             return $true
         } else {
             Write-Warning "Call flow generation completed with exit code: $($process.ExitCode)"
@@ -547,6 +485,60 @@ try {
                 
                 if (Test-Path $dashboardFile) {
                     Write-Host "Call flow dashboard: $dashboardFile" -ForegroundColor Cyan
+                }
+                
+                # Generate PDFs if requested
+                if ($GeneratePDF) {
+                    Write-Host "" # Empty line for spacing
+                    Write-Host "=== Generating PDF Files ===" -ForegroundColor Yellow
+                    
+                    # Determine Python command
+                    $pythonCmd = if ($IsWindows) { "python" } else { "python3" }
+                    
+                    # Path to the simple PDF generator script
+                    $pdfScript = Join-Path $PSScriptRoot "generate_pdfs.py"
+                    $individualDir = Join-Path $latestCallFlowDir "Individual"
+                    
+                    if (Test-Path $pdfScript) {
+                        if (Test-Path $individualDir) {
+                            Write-Host "Converting HTML call flow maps to PDF..." -ForegroundColor Cyan
+                            
+                            try {
+                                # Run the PDF generation script
+                                & $pythonCmd $pdfScript $individualDir
+                                
+                                if ($LASTEXITCODE -eq 0) {
+                                    Write-Host "✓ PDF generation completed successfully" -ForegroundColor Green
+                                } else {
+                                    Write-Warning "PDF generation completed with errors (exit code: $LASTEXITCODE)"
+                                }
+                            } catch {
+                                Write-Warning "Failed to run PDF generation: $_"
+                            }
+                            
+                            # Also generate dashboard PDF
+                            if (Test-Path $dashboardFile) {
+                                Write-Host "Converting dashboard to PDF..." -ForegroundColor Cyan
+                                
+                                try {
+                                    & $pythonCmd $pdfScript $dashboardFile
+                                    
+                                    if ($LASTEXITCODE -eq 0) {
+                                        Write-Host "✓ Dashboard PDF generated successfully" -ForegroundColor Green
+                                    } else {
+                                        Write-Warning "Dashboard PDF generation completed with errors"
+                                    }
+                                } catch {
+                                    Write-Warning "Failed to generate dashboard PDF: $_"
+                                }
+                            }
+                        } else {
+                            Write-Warning "Individual call flow directory not found: $individualDir"
+                        }
+                    } else {
+                        Write-Warning "PDF generator script not found: $pdfScript"
+                        Write-Host "  To enable PDF generation, ensure generate_pdfs.py exists in the script directory" -ForegroundColor Yellow
+                    }
                 }
             }
         } else {

@@ -1,0 +1,23 @@
+{
+  "name": "tmc-calling-issues",
+  "version": "1.0.0",
+  "description": "This comprehensive PowerShell solution collects all Microsoft Teams calling configuration data and generates visual call flow maps with PDF export capability. Perfect for Teams administrators, consultants, and support engineers who need to understand and document complex calling configurations.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MFisher14/Teams-Calling-Scripting.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MFisher14/Teams-Calling-Scripting/issues"
+  },
+  "homepage": "https://github.com/MFisher14/Teams-Calling-Scripting#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.5.2"
+  }
+}

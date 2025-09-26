@@ -1,0 +1,59 @@
+# Microsoft Teams Calling Data Collection Output Folders
+TeamsCallingData_*/
+CallFlowMaps_*/
+
+# Generated data files
+*.zip
+*.log
+
+# Temporary files
+temp/
+tmp/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Desktop.ini
+
+# PowerShell
+*.ps1xml
+
+# Python cache (for PDF generation)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+.pytest_cache/
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/tasks.json
+
+# Log files
+*.log
+*.txt
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
