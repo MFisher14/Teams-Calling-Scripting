@@ -72,8 +72,15 @@ function Initialize-OutputDirectory {
         New-Item -ItemType Directory -Path $Path -Force | Out-Null
     }
     
-    # Create subdirectories
-    $subDirs = @("HTML", "PDF", "Individual", "Summary")
+    # Create subdirectories with new structure
+    $subDirs = @(
+        "HTML",
+        "HTML\Individual",
+        "HTML\Summary",
+        "PDF",
+        "PDF\Individual",
+        "PDF\Summary"
+    )
     foreach ($dir in $subDirs) {
         $subPath = Join-Path $Path $dir
         if (-not (Test-Path $subPath)) {
@@ -246,50 +253,68 @@ function Build-CallQueueFlow {
         IsBranch = $false
     }
     
-    # Step 3: Agent Assignment
+    # Step 3: Agent Assignment with direct branch container approach
     $agentCount = if ($QueueDetails.Agents) { $QueueDetails.Agents.Count } else { 0 }
+    $agentAssignmentStep = $stepCounter++
     
-    # Build agent list - for demonstration we'll show some sample users from UserSettings
-    $agentNames = @()
-    if ($QueueDetails.Agents -and $TeamsData.UserSettings -and $TeamsData.UserSettings.VoiceUserSettings) {
-        # Since ObjectId mapping isn't available in current data structure,
-        # we'll show first few voice users as example agents for this queue
-        $sampleUsers = $TeamsData.UserSettings.VoiceUserSettings | 
-                       Where-Object { $_.DisplayName -and $_.DisplayName -ne $null } | 
-                       Select-Object -First $agentCount
-        
-        foreach ($user in $sampleUsers) {
-            if ($user.DisplayName) {
-                $agentNames += $user.DisplayName
-            }
-        }
-    }
-    
-    # Create description with agent names
-    $agentDescription = "Available Agents: $agentCount"
-    if ($agentNames.Count -gt 0) {
-        $agentList = $agentNames -join ", "
-        if ($agentList.Length -gt 80) {
-            # Truncate if too long and show count
-            $truncated = ($agentNames | Select-Object -First 3) -join ", "
-            $remainingCount = $agentNames.Count - 3
-            $agentDescription += "`nSample Agents: $truncated" + $(if ($remainingCount -gt 0) { " (+$remainingCount more)" } else { "" })
-        } else {
-            $agentDescription += "`nAgents: $agentList"
-        }
-    }
-    
-    $callFlow += @{
-        Step = $stepCounter++
+    # Create the agent assignment step
+    $agentAssignmentStepObj = @{
+        Step = $agentAssignmentStep
         Type = "Agent Assignment" 
-        Description = $agentDescription
+        Description = "Available Agents: $agentCount"
         Details = "Conference Mode: $($QueueDetails.ConferenceMode), Presence Based: $($QueueDetails.PresenceBasedRouting)"
         Component = "Agent Manager"
         Action = "Route to available agent"
         Icon = "👥"
         Color = "#007bff"
         IsBranch = $false
+        HasAgentBranches = $false  # Default to false
     }
+    
+    # Store agent details for branch rendering
+    if ($QueueDetails.Agents -and $agentCount -gt 0) {
+        # Get sample users from UserSettings to represent agents
+        $sampleUsers = @()
+        if ($TeamsData.UserSettings -and $TeamsData.UserSettings.VoiceUserSettings) {
+            $sampleUsers = $TeamsData.UserSettings.VoiceUserSettings | 
+                          Where-Object { $_.DisplayName -and $null -ne $_.DisplayName } | 
+                          Select-Object -First $agentCount
+        }
+        
+        # Create agent branches for later rendering
+        $agentBranches = @()
+        for ($i = 0; $i -lt $agentCount; $i++) {
+            $agentName = "Queue Agent $(($i + 1))"
+            $agentDetails = "ObjectId: $($QueueDetails.Agents[$i].ObjectId)"
+            
+            # Use actual user data if available
+            if ($i -lt $sampleUsers.Count -and $sampleUsers[$i]) {
+                $agentName = $sampleUsers[$i].DisplayName
+                $agentDetails = "Email: $($sampleUsers[$i].UserPrincipalName)"
+                if ($sampleUsers[$i].LineURI) {
+                    $agentDetails += ", Phone: $($sampleUsers[$i].LineURI)"
+                }
+            }
+            
+            $agentBranches += @{
+                Step = "$agentAssignmentStep.$(($i + 1))"
+                Type = "Agent Option"
+                Description = "Route to: $agentName"
+                Details = $agentDetails
+                Component = "Agent Routing"
+                Action = "Connect to agent"
+                Icon = "👤"
+                Color = "#28a745"
+            }
+        }
+        
+        # Add agent branches to the step
+        $agentAssignmentStepObj.HasAgentBranches = $true
+        $agentAssignmentStepObj.AgentBranches = $agentBranches
+    }
+    
+    # Add the step to the call flow
+    $callFlow += $agentAssignmentStepObj
     
     # Step 4: Timeout Handling
     if ($QueueDetails.TimeoutThreshold -and $QueueDetails.TimeoutThreshold -gt 0) {
@@ -358,10 +383,10 @@ function New-CallQueueHTML {
     
     $queueName = $QueueInfo.Name -replace '[^a-zA-Z0-9]', '_'
     $fileName = "Queue_$queueName.html"
-    $filePath = Join-Path $OutputPath "Individual\$fileName"
+    $filePath = Join-Path $OutputPath "HTML\Individual\$fileName"
     
     # Ensure directory exists
-    $individualDir = Join-Path $OutputPath "Individual"
+    $individualDir = Join-Path $OutputPath "HTML\Individual"
     if (-not (Test-Path $individualDir)) {
         New-Item -Path $individualDir -ItemType Directory -Force | Out-Null
     }
@@ -626,6 +651,188 @@ function New-CallQueueHTML {
             font-size: 0.85em;
             font-family: 'Courier New', monospace;
         }
+        
+        /* Branch container styles for agent options */
+        .branch-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-left: 30px;
+            padding: 15px;
+            background-color: rgba(23, 162, 184, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .branch-header {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #17a2b8;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .flow-step.branch {
+            margin-left: 0;
+            min-width: 450px;
+            max-width: 650px;
+            transform: scale(0.95);
+        }
+        
+        .flow-step.branch:hover {
+            transform: scale(0.98) translateY(-3px);
+        }
+        
+        .flow-step.branch::before {
+            content: '├─';
+            position: absolute;
+            left: -25px;
+            color: var(--step-color, #17a2b8);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        /* Print-specific styles for PDF generation */
+        @media print {
+            body {
+                background-color: white !important;
+                color: black !important;
+                margin: 0;
+                padding: 10px;
+                font-size: 12px;
+                line-height: 1.4;
+            }
+            .header {
+                background: #17a2b8 !important;
+                color: white !important;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+                padding: 15px;
+            }
+            .section {
+                background: white !important;
+                box-shadow: none !important;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+                margin-bottom: 15px;
+                padding: 15px;
+            }
+            .section h3 {
+                color: #17a2b8 !important;
+                font-size: 14px;
+                margin-top: 0;
+                page-break-after: avoid;
+            }
+            .flow-step {
+                background: white !important;
+                border: 2px solid #17a2b8 !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+                margin: 10px 0;
+                padding: 12px;
+                min-width: auto;
+                max-width: 100%;
+                transform: none !important;
+            }
+            .flow-step:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            .flow-step.branch {
+                margin-left: 30px;
+                border-left: 3px solid #17a2b8 !important;
+                background: white !important;
+                transform: none !important;
+            }
+            .flow-step.branch:hover {
+                transform: none !important;
+            }
+            .flow-step.branch::before {
+                color: #17a2b8 !important;
+            }
+            .branch-container {
+                background: rgba(23, 162, 184, 0.1) !important;
+                border-left: 2px solid #17a2b8 !important;
+                margin-left: 20px;
+                page-break-inside: avoid;
+            }
+            .branch-header {
+                color: #17a2b8 !important;
+                font-weight: bold;
+            }
+            .clickable-step::after {
+                display: none !important;
+            }
+            .step-icon {
+                font-size: 1.5em;
+            }
+            .step-number {
+                background: #17a2b8 !important;
+                color: white !important;
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
+            }
+            .step-type {
+                font-size: 1.1em;
+                color: black !important;
+            }
+            .step-description {
+                font-size: 1em;
+                color: #333 !important;
+            }
+            .step-component {
+                color: #666 !important;
+            }
+            .step-action {
+                color: #17a2b8 !important;
+            }
+            .step-details {
+                color: #28a745 !important;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            .info-item {
+                background-color: #f8f8f8 !important;
+                border-left: 3px solid #17a2b8 !important;
+                padding: 8px;
+            }
+            .info-label {
+                color: black !important;
+            }
+            .info-value {
+                color: black !important;
+            }
+            .table th {
+                background-color: #f0f0f0 !important;
+                color: black !important;
+            }
+            .agent-item {
+                background: white !important;
+                border-left: 3px solid #17a2b8 !important;
+            }
+            .agent-name {
+                color: black !important;
+            }
+            .agent-details {
+                color: #666 !important;
+            }
+            /* Prevent page breaks in critical sections */
+            .flow-step,
+            .branch-container,
+            .info-item,
+            .agent-item {
+                page-break-inside: avoid;
+            }
+            /* Ensure proper spacing for readability */
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+        }
     </style>
 </head>
 <body>
@@ -685,12 +892,24 @@ function New-CallQueueHTML {
                 <div class="agent-list">
 "@
             
+            # Get sample users to display as agents
+            $agentCounter = 0
+            $sampleUsers = @()
+            if ($TeamsData.UserSettings -and $TeamsData.UserSettings.VoiceUserSettings) {
+                $sampleUsers = $TeamsData.UserSettings.VoiceUserSettings | 
+                              Where-Object { $_.DisplayName -and $null -ne $_.DisplayName } | 
+                              Select-Object -First $queueDetails.Agents.Count
+            }
+            
             foreach ($agent in $queueDetails.Agents) {
-                # For now, show simplified agent info since ObjectId lookup is not available in current data structure
-                # Future enhancement: Collect Azure AD ObjectId in UserSettings to enable proper name resolution
-                
-                $displayName = "Queue Agent"
+                $displayName = "Queue Agent $(($agentCounter + 1))"
                 $userEmail = "ObjectId: $($agent.ObjectId)"
+                
+                # Use actual user data if available
+                if ($agentCounter -lt $sampleUsers.Count -and $sampleUsers[$agentCounter]) {
+                    $displayName = $sampleUsers[$agentCounter].DisplayName
+                    $userEmail = $sampleUsers[$agentCounter].UserPrincipalName
+                }
                 
                 # If agent has direct properties (fallback)
                 if ($agent.DisplayName) {
@@ -706,6 +925,7 @@ function New-CallQueueHTML {
                             <span class="agent-email">$userEmail</span>
                         </div>
 "@
+                $agentCounter++
             }
             
             $html += @"
@@ -765,6 +985,38 @@ function New-CallQueueHTML {
                 </div>
             </div>
 "@
+        
+        # Check if this step has agent branches to render
+        if ($step.HasAgentBranches -and $step.AgentBranches) {
+            $html += @"
+            <div class="branch-container">
+                <div class="branch-header">👥 Agent Options:</div>
+"@
+            foreach ($agentBranch in $step.AgentBranches) {
+                $html += @"
+                <div class="flow-step branch" style="--step-color: $($agentBranch.Color);">
+                    <div class="step-icon">$($agentBranch.Icon)</div>
+                    <div class="step-number">$($agentBranch.Step)</div>
+                    <div class="step-content">
+                        <div class="step-type">$($agentBranch.Type)</div>
+                        <div class="step-description">$($agentBranch.Description)</div>
+                        <div class="step-component">Component: $($agentBranch.Component)</div>
+                        <div class="step-action">Action: $($agentBranch.Action)</div>
+"@
+                if ($agentBranch.Details) {
+                    $html += @"
+                        <div class="step-details">$($agentBranch.Details)</div>
+"@
+                }
+                $html += @"
+                    </div>
+                </div>
+"@
+            }
+            $html += @"
+            </div>
+"@
+        }
         
         if (-not $isLast) {
             $html += @"
@@ -1258,150 +1510,141 @@ function Build-CallFlow {
                             Action = "Play menu options"
                             Icon = "📋"
                             Color = "#e83e8c"
+                            IsBranch = $false
                         }
                         
-                        # Add detailed menu option branches
+                        # Add detailed menu option branches as sub-options
                         if ($attendantDetail.DefaultCallFlow.Menu.MenuOptions -and $attendantDetail.DefaultCallFlow.Menu.MenuOptions.Count -gt 0) {
-                            $stepCounter = 5
                             foreach ($menuOption in $attendantDetail.DefaultCallFlow.Menu.MenuOptions) {
                                 $actionDescription = "Unknown Action"
                                 $actionDetails = ""
                                 $actionIcon = "🔗"
                                 $actionColor = "#17a2b8"
+                                $keyPress = if ($menuOption.DtmfResponse) { "Press $($menuOption.DtmfResponse)" } else { "Voice Command" }
                                 
-                                # Determine the action type and details based on Action code and CallTarget
-                                if ($menuOption.Action -and $menuOption.CallTarget) {
-                                    switch ($menuOption.Action) {
-                                        1 {
-                                            $actionDescription = "Disconnect"
-                                            $actionDetails = "End the call"
-                                            $actionIcon = "�"
-                                            $actionColor = "#dc3545"
-                                        }
-                                        2 {
-                                            # Transfer action - determine target based on CallTarget.Type
-                                            switch ($menuOption.CallTarget.Type) {
-                                                1 { # User
-                                                    $actionDescription = "Transfer to User"
-                                                    $actionDetails = "Target ID: $($menuOption.CallTarget.Id)"
-                                                    $actionIcon = "👤"
-                                                    $actionColor = "#28a745"
-                                                }
-                                                2 { # Auto Attendant
-                                                    $actionDescription = "Transfer to Auto Attendant"
-                                                    $actionDetails = "Target ID: $($menuOption.CallTarget.Id)"
-                                                    $actionIcon = "🤖"
-                                                    $actionColor = "#20c997"
-                                                }
-                                                3 { # Call Queue
-                                                    $queueName = Get-ResourceDisplayName -ResourceId $menuOption.CallTarget.Id -TeamsData $TeamsData
-                                                    $actionDescription = if ($queueName -ne "Unknown Resource") {
-                                                        "Transfer to $queueName Queue"
-                                                    } else {
-                                                        "Transfer to Call Queue"
-                                                    }
-                                                    $actionDetails = "Queue: $queueName"
-                                                    $actionIcon = "🏢"
-                                                    $actionColor = "#17a2b8"
-                                                }
-                                                4 { # Voicemail
-                                                    $actionDescription = "Transfer to Voicemail"
-                                                    $actionDetails = "Target ID: $($menuOption.CallTarget.Id)"
-                                                    $actionIcon = "📧"
-                                                    $actionColor = "#6f42c1"
-                                                }
-                                                5 { # PSTN
-                                                    $actionDescription = "Transfer to Phone Number"
-                                                    $actionDetails = "Target: $($menuOption.CallTarget.Id)"
-                                                    $actionIcon = "📱"
-                                                    $actionColor = "#fd7e14"
-                                                }
-                                                default {
-                                                    $actionDescription = "Transfer (Type $($menuOption.CallTarget.Type))"
-                                                    $actionDetails = "Target ID: $($menuOption.CallTarget.Id)"
-                                                    $actionIcon = "�"
-                                                    $actionColor = "#17a2b8"
-                                                }
+                                # Determine navigation targets for menu options
+                                $targetPhoneNumber = ""
+                                $targetFile = ""
+                                $isClickable = $false
+                                
+                                # Handle different action types and determine navigation targets
+                                if ($menuOption.Action -eq 2 -and $menuOption.CallTarget) {
+                                    # Action 2 = Transfer based on CallTarget.Type
+                                    switch ($menuOption.CallTarget.Type) {
+                                        3 { # Call Queue
+                                            $queueName = Get-ResourceDisplayName -ResourceId $menuOption.CallTarget.Id -TeamsData $TeamsData
+                                            $actionDescription = if ($queueName -ne "Unknown Resource") {
+                                                "Transfer to $queueName Queue"
+                                            } else {
+                                                "Transfer to Call Queue"
                                             }
+                                            $actionDetails = "Queue: $queueName"
+                                            $actionIcon = "🏢"
+                                            $actionColor = "#17a2b8"
+                                            $targetFile = Get-QueueFileName -ResourceId $menuOption.CallTarget.Id -TeamsData $TeamsData
+                                            if ($targetFile) { $isClickable = $true }
                                         }
-                                        3 {
-                                            $actionDescription = "Play Announcement"
-                                            $actionDetails = "Custom message"
-                                            $actionIcon = "🔊"
-                                            $actionColor = "#e83e8c"
+                                        2 { # Auto Attendant
+                                            $attendantName = Get-ResourceDisplayName -ResourceId $menuOption.CallTarget.Id -TeamsData $TeamsData
+                                            $actionDescription = "Transfer to Auto Attendant: $attendantName"
+                                            $actionDetails = "Attendant: $attendantName"
+                                            $actionIcon = "🤖"
+                                            $actionColor = "#20c997"
+                                            $targetPhoneNumber = Find-PhoneNumberByResourceId -ResourceId $menuOption.CallTarget.Id -PhoneNumbers $PhoneNumbers -TeamsData $TeamsData
+                                            if ($targetPhoneNumber) { $isClickable = $true }
                                         }
-                                        4 {
-                                            $actionDescription = "Transfer to Operator"
-                                            $actionDetails = "Route to designated operator"
-                                            $actionIcon = "�‍💼"
+                                        1 { # User
+                                            $actionDescription = "Transfer to User"
+                                            $actionDetails = "Target: $($menuOption.CallTarget.Id)"
+                                            $actionIcon = "👤"
                                             $actionColor = "#007bff"
                                         }
                                         default {
-                                            $actionDescription = "Action Code $($menuOption.Action)"
-                                            $actionDetails = if ($menuOption.CallTarget) { "Target ID: $($menuOption.CallTarget.Id)" } else { "" }
-                                            $actionIcon = "⚙️"
-                                            $actionColor = "#6c757d"
+                                            $actionDescription = "Transfer to: Type $($menuOption.CallTarget.Type)"
+                                            $actionDetails = "Target: $($menuOption.CallTarget.Id)"
+                                            $actionIcon = "🔗"
+                                            $actionColor = "#17a2b8"
                                         }
                                     }
-                                } elseif ($menuOption.Action -eq 1) {
-                                    # Disconnect without CallTarget
-                                    $actionDescription = "Disconnect"
-                                    $actionDetails = "End the call"
-                                    $actionIcon = "📴"
-                                    $actionColor = "#dc3545"
-                                } else {
-                                    $actionDescription = "Action Code $($menuOption.Action)"
-                                    $actionDetails = "No target specified"
-                                    $actionIcon = "⚙️"
-                                    $actionColor = "#6c757d"
                                 }
-                                
-                                # Determine the key press option
-                                $keyPress = "Unknown Key"
-                                if ($null -ne $menuOption.DtmfResponse) {
-                                    if ($menuOption.DtmfResponse -eq 100) {
-                                        $keyPress = "Press 0 (Timeout)"
-                                    } else {
-                                        $keyPress = "Press $($menuOption.DtmfResponse)"
-                                    }
-                                } elseif ($menuOption.VoiceResponses -and $menuOption.VoiceResponses.Count -gt 0) {
-                                    $keyPress = "Say ""$($menuOption.VoiceResponses[0])"""
-                                }
-                                
-                                # Resolve target for navigation (phone number or queue file)
-                                $targetPhoneNumber = ""
-                                $targetFile = ""
-                                if ($menuOption.Action -eq 2 -and $menuOption.CallTarget) {
-                                    switch ($menuOption.CallTarget.Type) {
-                                        2 { # Auto Attendant - find phone number by attendant ID
-                                            $targetPhoneNumber = Find-PhoneNumberByResourceId -ResourceId $menuOption.CallTarget.Id -PhoneNumbers $PhoneNumbers -TeamsData $TeamsData
-                                        }
-                                        3 { # Call Queue - try to find queue file, fallback to phone number  
-                                            $queueFile = Get-QueueFileName -ResourceId $menuOption.CallTarget.Id -TeamsData $TeamsData
-                                            if ($queueFile) {
-                                                $targetFile = $queueFile
-                                            } else {
-                                                $targetPhoneNumber = Find-PhoneNumberByResourceId -ResourceId $menuOption.CallTarget.Id -PhoneNumbers $PhoneNumbers -TeamsData $TeamsData
+                                elseif ($menuOption.Action -and $menuOption.CallTarget) {
+                                    # Handle string-based actions
+                                    switch ($menuOption.Action) {
+                                        "TransferCallToTarget" {
+                                            if ($menuOption.CallTarget.Type -eq "User") {
+                                                $actionDescription = "Transfer to User"
+                                                $actionDetails = "Target: $($menuOption.CallTarget.Id)"
+                                                $actionIcon = "👤"
+                                                $actionColor = "#007bff"
+                                            }
+                                            elseif ($menuOption.CallTarget.Type -eq "VoiceApp") {
+                                                $resourceName = Get-ResourceDisplayName -ResourceId $menuOption.CallTarget.Id -TeamsData $TeamsData
+                                                $actionDescription = "Transfer to Voice App: $resourceName"
+                                                $actionDetails = "Resource ID: $($menuOption.CallTarget.Id)"
+                                                $actionIcon = "🎵"
+                                                $actionColor = "#6f42c1"
+                                                $targetFile = Get-QueueFileName -ResourceId $menuOption.CallTarget.Id -TeamsData $TeamsData
+                                                if (-not $targetFile) {
+                                                    $targetPhoneNumber = Find-PhoneNumberByResourceId -ResourceId $menuOption.CallTarget.Id -PhoneNumbers $PhoneNumbers -TeamsData $TeamsData
+                                                }
+                                                if ($targetFile -or $targetPhoneNumber) { $isClickable = $true }
+                                            }
+                                            else {
+                                                $actionDescription = "Transfer to: $($menuOption.CallTarget.Type)"
+                                                $actionDetails = "ID: $($menuOption.CallTarget.Id)"
+                                                $actionIcon = "🔗"
+                                                $actionColor = "#17a2b8"
                                             }
                                         }
+                                        "Disconnect" {
+                                            $actionDescription = "Disconnect Call"
+                                            $actionDetails = "End the call"
+                                            $actionIcon = "📞"
+                                            $actionColor = "#dc3545"
+                                        }
+                                        "Announcement" {
+                                            $actionDescription = "Play Announcement"
+                                            $actionDetails = "Audio message to caller"
+                                            $actionIcon = "📢"
+                                            $actionColor = "#ffc107"
+                                        }
+                                        default {
+                                            $actionDescription = "Menu Action: $($menuOption.Action)"
+                                            $actionDetails = "Target: $($menuOption.CallTarget.Type)"
+                                            $actionIcon = "🔗"
+                                            $actionColor = "#17a2b8"
+                                        }
                                     }
                                 }
-
+                                elseif ($menuOption.Action -eq 1) {
+                                    # Action 1 = Disconnect
+                                    $actionDescription = "Disconnect Call"
+                                    $actionDetails = "End the call"
+                                    $actionIcon = "📞"
+                                    $actionColor = "#dc3545"
+                                }
+                                else {
+                                    # Fallback for unknown actions
+                                    $actionDescription = "Menu Action: $($menuOption.Action)"
+                                    $actionDetails = "No target specified"
+                                    $actionIcon = "🔗"
+                                    $actionColor = "#17a2b8"
+                                }
+                                
                                 $callFlow += @{
-                                    Step = $stepCounter
-                                    Type = "Menu Option $($stepCounter - 4)"
-                                    Description = "$keyPress → $actionDescription"
+                                    Step = "4.$(($menuOption.DtmfResponse))"
+                                    Type = "Menu Option"
+                                    Description = "${keyPress}: $actionDescription"
                                     Details = $actionDetails
-                                    Component = "Menu Branch"
-                                    Action = "Process menu selection"
+                                    Component = "Menu Router"
+                                    Action = "Execute menu selection"
                                     Icon = $actionIcon
                                     Color = $actionColor
                                     IsBranch = $true
-                                    BranchLevel = 1
                                     TargetPhoneNumber = $targetPhoneNumber
                                     TargetFile = $targetFile
+                                    IsClickable = $isClickable
                                 }
-                                $stepCounter++
                             }
                         }
                     }
@@ -1456,7 +1699,7 @@ function New-CallFlowHTML {
     )
     
     $safeFileName = $PhoneNumberInfo.Number -replace '[^\d]', ''
-    $htmlFile = Join-Path $OutputPath "Individual" "$safeFileName.html"
+    $htmlFile = Join-Path $OutputPath "HTML\Individual" "$safeFileName.html"
     
     # Generate HTML content
     $html = @"
@@ -1705,6 +1948,143 @@ function New-CallFlowHTML {
             border-radius: 3px;
             margin-left: 10px;
         }
+        
+        /* Print-specific styles for PDF generation */
+        @media print {
+            body {
+                background-color: white !important;
+                color: black !important;
+                margin: 0;
+                padding: 10px;
+                font-size: 12px;
+                line-height: 1.4;
+            }
+            .header {
+                background: #007bff !important;
+                color: white !important;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+                padding: 15px;
+            }
+            .section {
+                background: white !important;
+                box-shadow: none !important;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+                margin-bottom: 15px;
+                padding: 15px;
+            }
+            .section h3 {
+                color: #007bff !important;
+                font-size: 14px;
+                margin-top: 0;
+                page-break-after: avoid;
+            }
+            .flow-step {
+                background: white !important;
+                border: 2px solid #007bff !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+                margin: 10px 0;
+                padding: 12px;
+                min-width: auto;
+                max-width: 100%;
+            }
+            .flow-step:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            .flow-step.branch {
+                margin-left: 30px;
+                border-left: 3px solid #007bff !important;
+                background: white !important;
+            }
+            .branch-container {
+                background: rgba(0, 123, 255, 0.1) !important;
+                border-left: 2px solid #007bff !important;
+                margin-left: 20px;
+                page-break-inside: avoid;
+            }
+            .branch-header {
+                color: #007bff !important;
+                font-weight: bold;
+            }
+            .clickable-step::after {
+                display: none !important;
+            }
+            .step-icon {
+                font-size: 1.5em;
+            }
+            .step-number {
+                background: #007bff !important;
+                color: white !important;
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
+            }
+            .step-type {
+                font-size: 1.1em;
+                color: black !important;
+            }
+            .step-description {
+                font-size: 1em;
+                color: #333 !important;
+            }
+            .step-component {
+                color: #666 !important;
+            }
+            .step-action {
+                color: #007bff !important;
+            }
+            .step-details {
+                color: #28a745 !important;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            .info-item {
+                background-color: #f8f8f8 !important;
+                border-left: 3px solid #007bff !important;
+                padding: 8px;
+            }
+            .info-label {
+                color: black !important;
+            }
+            .info-value {
+                color: black !important;
+            }
+            .table th {
+                background-color: #f0f0f0 !important;
+                color: black !important;
+            }
+            .config-section {
+                background-color: #f8f8f8 !important;
+                border: 1px solid #ddd;
+            }
+            .config-item {
+                background: white !important;
+                border-left: 3px solid #28a745 !important;
+            }
+            .config-key {
+                color: black !important;
+            }
+            .config-value {
+                background-color: #f0f0f0 !important;
+                color: black !important;
+            }
+            /* Prevent page breaks in critical sections */
+            .flow-step,
+            .branch-container,
+            .info-item,
+            .config-item {
+                page-break-inside: avoid;
+            }
+            /* Ensure proper spacing for readability */
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1769,12 +2149,20 @@ function New-CallFlowHTML {
         if (-not $isBranch) {
             # Process any accumulated branch steps first
             if ($branchSteps.Count -gt 0) {
+                # Determine branch type and header
+                $branchHeader = "📋 Menu Options:"
+                if ($branchSteps[0].Type -eq "Agent Option") {
+                    $branchHeader = "👥 Agent Options:"
+                }
+                
                 $html += @"
             <div class="branch-container">
-                <div class="branch-header">📋 Menu Options:</div>
+                <div class="branch-header">$branchHeader</div>
 "@
                 foreach ($branchStep in $branchSteps) {
-                    $clickableClass = if ($branchStep.TargetPhoneNumber -or $branchStep.TargetFile) { "clickable-step" } else { "" }
+                    # Check for clickability from IsClickable property or navigation targets
+                    $isClickable = $branchStep.IsClickable -or $branchStep.TargetPhoneNumber -or $branchStep.TargetFile
+                    $clickableClass = if ($isClickable) { "clickable-step" } else { "" }
                     $targetPhoneAttr = if ($branchStep.TargetPhoneNumber) { "data-target-phone=""$($branchStep.TargetPhoneNumber)""" } else { "" }
                     $targetFileAttr = if ($branchStep.TargetFile) { "data-target-file=""$($branchStep.TargetFile)""" } else { "" }
                     
@@ -1832,6 +2220,38 @@ function New-CallFlowHTML {
             </div>
 "@
             
+            # Check if this step has agent branches to render
+            if ($step.HasAgentBranches -and $step.AgentBranches) {
+                $html += @"
+            <div class="branch-container">
+                <div class="branch-header">👥 Agent Options:</div>
+"@
+                foreach ($agentBranch in $step.AgentBranches) {
+                    $html += @"
+                <div class="flow-step branch" style="--step-color: $($agentBranch.Color);">
+                    <div class="step-icon">$($agentBranch.Icon)</div>
+                    <div class="step-number">$($agentBranch.Step)</div>
+                    <div class="step-content">
+                        <div class="step-type">$($agentBranch.Type)</div>
+                        <div class="step-description">$($agentBranch.Description)</div>
+                        <div class="step-component">Component: $($agentBranch.Component)</div>
+                        <div class="step-action">Action: $($agentBranch.Action)</div>
+"@
+                    if ($agentBranch.Details) {
+                        $html += @"
+                        <div class="step-details">$($agentBranch.Details)</div>
+"@
+                    }
+                    $html += @"
+                    </div>
+                </div>
+"@
+                }
+                $html += @"
+            </div>
+"@
+            }
+            
             # Add arrow if not last step and next step is not a branch
             $nextStepIsBranch = ($i + 1) -lt $CallFlow.Count -and $CallFlow[$i + 1].IsBranch -eq $true
             if (-not $isLast -and -not $nextStepIsBranch) {
@@ -1848,12 +2268,20 @@ function New-CallFlowHTML {
     
     # Process any remaining branch steps
     if ($branchSteps.Count -gt 0) {
+        # Determine branch type and header
+        $branchHeader = "📋 Menu Options:"
+        if ($branchSteps[0].Type -eq "Agent Option") {
+            $branchHeader = "👥 Agent Options:"
+        }
+        
         $html += @"
             <div class="branch-container">
-                <div class="branch-header">📋 Menu Options:</div>
+                <div class="branch-header">$branchHeader</div>
 "@
         foreach ($branchStep in $branchSteps) {
-            $clickableClass = if ($branchStep.TargetPhoneNumber -or $branchStep.TargetFile) { "clickable-step" } else { "" }
+            # Check for clickability from IsClickable property or navigation targets
+            $isClickable = $branchStep.IsClickable -or $branchStep.TargetPhoneNumber -or $branchStep.TargetFile
+            $clickableClass = if ($isClickable) { "clickable-step" } else { "" }
             $targetPhoneAttr = if ($branchStep.TargetPhoneNumber) { "data-target-phone=""$($branchStep.TargetPhoneNumber)""" } else { "" }
             $targetFileAttr = if ($branchStep.TargetFile) { "data-target-file=""$($branchStep.TargetFile)""" } else { "" }
             
@@ -1963,20 +2391,30 @@ function New-CallFlowHTML {
             }
         }
         
+        function navigateToFile(fileName) {
+            if (fileName && fileName.trim() !== '') {
+                const currentPath = window.location.pathname;
+                const newPath = currentPath.substring(0, currentPath.lastIndexOf('/')) + '/' + fileName;
+                window.location.href = newPath;
+            } else {
+                alert('Target file not available for navigation');
+            }
+        }
+        
         // Add click handlers to clickable steps
         document.addEventListener('DOMContentLoaded', function() {
             const clickableSteps = document.querySelectorAll('.clickable-step');
             clickableSteps.forEach(step => {
                 step.addEventListener('click', function() {
+                    const targetPhone = this.getAttribute('data-target-phone');
                     const targetFile = this.getAttribute('data-target-file');
-                    const phoneNumber = this.getAttribute('data-target-phone');
                     
                     if (targetFile) {
-                        // Navigate to queue file
-                        window.open(targetFile, '_blank');
-                    } else if (phoneNumber) {
-                        // Navigate using phone number
-                        navigateToCallFlow(phoneNumber);
+                        navigateToFile(targetFile);
+                    } else if (targetPhone) {
+                        navigateToCallFlow(targetPhone);
+                    } else {
+                        alert('Navigation target not available for this option');
                     }
                 });
             });
@@ -2016,7 +2454,7 @@ function New-SummaryDashboard {
         $totalCallQueues = $TeamsData.CallQueues.CallQueueDetails.Count
     }
     
-    $summaryFile = Join-Path $OutputPath "Summary" "Dashboard.html"
+    $summaryFile = Join-Path $OutputPath "HTML" "Summary" "Dashboard.html"
     
     $html = @"
 <!DOCTYPE html>
@@ -2433,54 +2871,102 @@ function ConvertTo-PDF {
         [string]$OutputPath
     )
     
-    $pdfPath = $HtmlFilePath -replace '\.html$', '.pdf'
+    # Convert HTML path to PDF path with new folder structure
+    $relativePath = $HtmlFilePath -replace [regex]::Escape($OutputPath), ''
+    $pdfPath = $relativePath -replace '[\\/]HTML[\\/]', '/PDF/' -replace '\\.html$', '.pdf'
+    $pdfPath = Join-Path $OutputPath $pdfPath
+    
     $pdfDir = Split-Path $pdfPath -Parent
     if (-not (Test-Path $pdfDir)) {
         New-Item -ItemType Directory -Path $pdfDir -Force | Out-Null
     }
     
     try {
-        # Try using Chrome/Chromium in headless mode
-        $chromeExe = $null
-        $possiblePaths = @(
-            "${env:ProgramFiles}\Google\Chrome\Application\chrome.exe",
-            "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
-            "${env:ProgramFiles}\Microsoft\Edge\Application\msedge.exe",
-            "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
-        )
+        # Try using Chrome/Chromium/Edge in headless mode
+        $browserExe = $null
+        $possiblePaths = @()
+        
+        # Check for different operating systems
+        if ($PSVersionTable.Platform -eq "Unix" -or $env:OS -notlike "*Windows*") {
+            # macOS/Linux paths
+            $possiblePaths += @(
+                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+                "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+                "/Applications/Chromium.app/Contents/MacOS/Chromium",
+                "/usr/bin/google-chrome",
+                "/usr/bin/chromium-browser",
+                "/usr/bin/chromium",
+                "/opt/google/chrome/google-chrome"
+            )
+        } else {
+            # Windows paths
+            $possiblePaths += @(
+                "${env:ProgramFiles}\Google\Chrome\Application\chrome.exe",
+                "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+                "${env:ProgramFiles}\Microsoft\Edge\Application\msedge.exe",
+                "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe",
+                "${env:LOCALAPPDATA}\Google\Chrome\Application\chrome.exe"
+            )
+        }
         
         foreach ($path in $possiblePaths) {
             if (Test-Path $path) {
-                $chromeExe = $path
+                $browserExe = $path
                 break
             }
         }
         
-        if ($chromeExe) {
+        if ($browserExe) {
             $fileUri = "file:///$($HtmlFilePath -replace '\\', '/')"
-            $chromeArgs = @(
+            $browserArgs = @(
                 "--headless",
                 "--disable-gpu",
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
+                "--disable-extensions",
+                "--disable-plugins",
+                "--disable-background-timer-throttling",
+                "--disable-backgrounding-occluded-windows",
+                "--disable-renderer-backgrounding",
+                "--run-all-compositor-stages-before-draw",
+                "--virtual-time-budget=15000",
                 "--print-to-pdf=`"$pdfPath`"",
                 "--print-to-pdf-no-header",
-                "--virtual-time-budget=10000",
+                "--print-to-pdf-display-header-footer=false",
+                "--print-to-pdf-header-template=''",
+                "--print-to-pdf-footer-template=''",
+                "--print-to-pdf-paper-width=8.5",
+                "--print-to-pdf-paper-height=11",
+                "--print-to-pdf-margin-top=0.3",
+                "--print-to-pdf-margin-bottom=0.3",
+                "--print-to-pdf-margin-left=0.4",
+                "--print-to-pdf-margin-right=0.4",
                 "`"$fileUri`""
             )
             
-            $process = Start-Process -FilePath $chromeExe -ArgumentList $chromeArgs -Wait -NoNewWindow -PassThru
+            Write-Host "  Generating PDF: $(Split-Path $pdfPath -Leaf)" -ForegroundColor Yellow
+            $process = Start-Process -FilePath $browserExe -ArgumentList $browserArgs -Wait -NoNewWindow -PassThru
             
             # Wait a moment for file to be written
-            Start-Sleep -Seconds 2
+            Start-Sleep -Seconds 3
             
             if ((Test-Path $pdfPath) -and $process.ExitCode -eq 0) {
-                Write-Host "✓ Generated PDF: $(Split-Path $pdfPath -Leaf)" -ForegroundColor Green
-                return $pdfPath
+                $fileSize = (Get-Item $pdfPath).Length
+                if ($fileSize -gt 1024) { # File should be at least 1KB
+                    Write-Host "✓ Generated PDF: $(Split-Path $pdfPath -Leaf) ($([math]::Round($fileSize/1024, 1)) KB)" -ForegroundColor Green
+                    return $pdfPath
+                } else {
+                    Write-Warning "Generated PDF appears to be empty or corrupted: $(Split-Path $pdfPath -Leaf)"
+                    if (Test-Path $pdfPath) { Remove-Item $pdfPath -Force }
+                }
+            } else {
+                Write-Warning "PDF generation process failed. Exit code: $($process.ExitCode)"
             }
+        } else {
+            Write-Warning "Could not find Chrome, Edge, or Chromium browser for PDF generation."
+            Write-Host "  Please install Google Chrome, Microsoft Edge, or Chromium to enable PDF generation." -ForegroundColor Gray
         }
         
-        Write-Warning "Could not generate PDF. Chrome/Edge not found or PDF generation failed."
         return $null
     }
     catch {
