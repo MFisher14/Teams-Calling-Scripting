@@ -2944,7 +2944,7 @@ function ConvertTo-PDF {
                 "`"$fileUri`""
             )
             
-            Write-Host "  Generating PDF: $(Split-Path $pdfPath -Leaf)" -ForegroundColor Yellow
+            Write-Host "  Generating PDF: $($(Split-Path $pdfPath -Leaf) -replace '\\.html$', '.pdf')" -ForegroundColor Yellow
             $process = Start-Process -FilePath $browserExe -ArgumentList $browserArgs -Wait -NoNewWindow -PassThru
             
             # Wait a moment for file to be written
@@ -2953,6 +2953,13 @@ function ConvertTo-PDF {
             if ((Test-Path $pdfPath) -and $process.ExitCode -eq 0) {
                 $fileSize = (Get-Item $pdfPath).Length
                 if ($fileSize -gt 1024) { # File should be at least 1KB
+                    # Rename the file to have correct .pdf extension
+                    $correctPdfPath = $pdfPath -replace '\\.html$', '.pdf'
+                    if ($pdfPath -ne $correctPdfPath) {
+                        Move-Item $pdfPath $correctPdfPath -Force
+                        $pdfPath = $correctPdfPath
+                        $fileSize = (Get-Item $pdfPath).Length
+                    }
                     Write-Host "✓ Generated PDF: $(Split-Path $pdfPath -Leaf) ($([math]::Round($fileSize/1024, 1)) KB)" -ForegroundColor Green
                     return $pdfPath
                 } else {

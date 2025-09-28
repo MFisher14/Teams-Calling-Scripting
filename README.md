@@ -7,11 +7,8 @@ This comprehensive PowerShell solution collects all Microsoft Teams calling conf
 - **📊 Complete Data Collection**: Gathers all Teams calling settings, policies, phone numbers, auto attendants, call queues, emergency locations, and more
 - **🧩 Modular Architecture**: 7 specialized modules for different Teams components plus call flow generators
 - **🎨 Visual Call Flow Maps**: Generates professional HTML call flow diagrams for each phone number
-- **📄 PDF Export**: Converts call flow maps to PDF using modern Playwright technology
+- **📄 PDF Export**: Converts call flow maps to PDF using Chrome/Edge headless mode
 - **📋 Summary Dashboard**: Interactive overview of all phone numbers and their configurations
-- **🎯 Flexible Filtering**: Focus on specific phone numbers or collect all data
-- **⚡ Automated Workflow**: Seamless integration from data collection to PDF generation
-- **🔍 Advanced Analysis**: Step-by-step visual call routing with detailed configuration data
 - **👥 Queue User Details**: Shows which users are assigned to each call queue
 - **🎯 Flexible Filtering**: Focus on specific phone numbers or collect all data
 - **⚡ Automated Workflow**: Seamless integration from data collection to PDF generation
@@ -21,10 +18,8 @@ This comprehensive PowerShell solution collects all Microsoft Teams calling conf
 
 ### 1. Install Prerequisites
 ```bash
-# Install Python dependencies for PDF generation (choose one method)
-python Modules/setup_pdf.py          # Automated setup
-# OR manual install:
-pip install playwright && playwright install chromium
+# No additional setup needed - uses Chrome/Edge headless mode for PDF generation
+# Chrome or Edge browser required for PDF export
 ```
 
 ### 2. Run Complete Analysis
@@ -47,8 +42,7 @@ pip install playwright && playwright install chromium
 - **Administrative Permissions**: Teams Administrator or Global Administrator role
 
 ### Optional (for PDF Generation)
-- **Python**: 3.7 or higher 
-- **Playwright**: Modern browser automation (replaces discontinued wkhtmltopdf)
+- **Chrome or Edge Browser**: Modern browser for PDF generation (built-in headless mode)
 
 ### Additional Permissions for Complete Data Collection
 - **Teams Communications Administrator** (for calling policies and configurations)
@@ -61,7 +55,6 @@ pip install playwright && playwright install chromium
 TMC Calling Issues/
 ├── README.md                           # This file - complete documentation
 ├── Gather-Teams-Calling-Data.ps1      # Main orchestration script
-├── Initial_Issue_Log.md                # Project background and issues
 ├── Modules/                            # All modules and components
 │   ├── TeamsCallingPolicies.psm1      # Calling policies and configurations
 │   ├── TeamsCallQueues.psm1           # Call queues and hunt groups  
@@ -70,13 +63,16 @@ TMC Calling Issues/
 │   ├── TeamsEmergencyLocations.psm1   # Emergency calling locations and policies
 │   ├── TeamsVoiceRouting.psm1         # Voice routing, PSTN, and Direct Routing
 │   ├── TeamsComplianceSettings.psm1   # Compliance, security, and audit settings
-│   ├── Generate-CallFlowMaps-Simple.ps1 # Modern call flow map generator
-│   ├── Generate-CallFlowMaps.ps1       # Legacy call flow generator (PSWriteHTML)
-│   ├── pdf_generator.py                # Python PDF generation using Playwright
-│   └── setup_pdf.py                    # Automated Python environment setup
+│   └── TeamsCallFlowMaps.psm1         # Call flow map generator with PDF support
 └── [Generated Output Folders]
     ├── TeamsCallingData_YYYYMMDD_HHMMSS/  # JSON data files
     └── CallFlowMaps_YYYYMMDD_HHMMSS/      # HTML and PDF call flow maps
+        ├── HTML/
+        │   ├── Individual/             # Individual phone number HTML reports
+        │   └── Summary/               # Dashboard.html
+        └── PDF/
+            ├── Individual/             # Individual phone number PDF reports
+            └── Summary/               # Dashboard.pdf
 ```
 
 ## 🎯 Core Components
@@ -94,10 +90,7 @@ TMC Calling Issues/
 7. **`TeamsComplianceSettings.psm1`** - Compliance, security, and audit settings
 
 ### Call Flow Analysis Tools (`/Modules/`)
-- **`Generate-CallFlowMaps-Simple.ps1`** - Modern HTML call flow generator with clean design
-- **`Generate-CallFlowMaps.ps1`** - Legacy PSWriteHTML-based generator (deprecated)
-- **`pdf_generator.py`** - Python-based PDF conversion using Playwright
-- **`setup_pdf.py`** - Automated setup for Python PDF dependencies
+- **`TeamsCallFlowMaps.psm1`** - Modern call flow generator with PDF support using Chrome/Edge headless mode
 
 ## 💼 Usage Examples
 
@@ -176,19 +169,19 @@ TeamsCallingData_20250926_143022/
 ### Call Flow Maps
 ```
 CallFlowMaps_20250926_112010/
-├── Summary/
-│   └── Dashboard.html                 # Interactive summary dashboard
-├── Individual/
-│   ├── 19843081541.html              # Call flow for +1-984-308-1541
-│   ├── 19843081461.html              # Call flow for +1-984-308-1461  
-│   └── [other numbers].html
-├── PDF/ (if -GeneratePDF used)
-│   ├── Summary/
-│   │   └── Dashboard.pdf
-│   └── Individual/
-│       ├── 19843081541.pdf
-│       └── [other number PDFs]
-└── HTML/ (backup)
+├── HTML/
+│   ├── Individual/
+│   │   ├── 19843081541.html          # Call flow for +1-984-308-1541
+│   │   ├── 19843081461.html          # Call flow for +1-984-308-1461  
+│   │   └── [other numbers].html
+│   └── Summary/
+│       └── Dashboard.html             # Interactive summary dashboard
+└── PDF/ (if -GeneratePDF used)
+    ├── Individual/
+    │   ├── 19843081541.pdf
+    │   └── [other number PDFs]
+    └── Summary/
+        └── Dashboard.pdf
 ```
 
 ## 🔍 Data Collection Details
@@ -790,5 +783,3 @@ The script outputs detailed progress information to the console. Redirect to a f
 - Last Updated: September 26, 2025
 
 ---
-
-*This tool is designed for TMC Calling Issues analysis and Teams calling configuration auditing.*

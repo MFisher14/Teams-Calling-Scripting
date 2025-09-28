@@ -232,45 +232,36 @@ function New-SummaryReport {
 
 # Function to test for call flow generation prerequisites
 function Test-CallFlowPrerequisites {
-    $callFlowScript = Join-Path $ModulesPath "Generate-CallFlowMaps-Simple.ps1"
-    $pdfGenerator = Join-Path $ModulesPath "pdf_generator.py"
-    $generatePdfScript = Join-Path $PSScriptRoot "generate_pdfs.py"
+    $callFlowScript = Join-Path $ModulesPath "TeamsCallFlowMaps.psm1"
     
     $prerequisites = @{
         CallFlowScript = Test-Path $callFlowScript
-        PdfGenerator = (Test-Path $pdfGenerator) -or (Test-Path $generatePdfScript)
-        Python = $false
-        Playwright = $false
+        ChromeEdge = $false
     }
     
-    # Test for Python
-    try {
-        $pythonCmd = if ($IsWindows) { "python" } else { "python3" }
-        $pythonVersion = & $pythonCmd --version 2>&1
-        if ($pythonVersion -match "Python \d+\.\d+") {
-            $prerequisites.Python = $true
-        }
-    }
-    catch {
-        # Python not found
-        $prerequisites.Python = $false
+    # Test for Chrome or Edge browsers (required for PDF generation)
+    $browserPaths = @()
+    if ($PSVersionTable.Platform -eq "Unix" -or $env:OS -notlike "*Windows*") {
+        # macOS/Linux paths
+        $browserPaths += @(
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+            "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
+        )
+    } else {
+        # Windows paths
+        $browserPaths += @(
+            "${env:ProgramFiles}\Google\Chrome\Application\chrome.exe",
+            "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+            "${env:ProgramFiles}\Microsoft\Edge\Application\msedge.exe",
+            "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
+        )
     }
     
-    # Test for Playwright (only if Python is available)
-    if ($prerequisites.Python) {
-        try {
-            $pythonCmd = if ($IsWindows) { "python" } else { "python3" }
-            $playwrightTest = & $pythonCmd -c "import playwright; print('OK')" 2>&1
-            if ($playwrightTest -match "OK") {
-                $prerequisites.Playwright = $true
-            }
+    foreach ($path in $browserPaths) {
+        if (Test-Path $path) {
+            $prerequisites.ChromeEdge = $true
+            break
         }
-        catch {
-            $prerequisites.Playwright = $false
-        }
-    }
-    else {
-        $prerequisites.Playwright = $false
     }
     
     return $prerequisites
@@ -286,7 +277,7 @@ function Invoke-CallFlowGeneration {
     
     Write-Host "`n=== Generating Call Flow Maps ===" -ForegroundColor Cyan
     
-    $callFlowScript = Join-Path $ModulesPath "Generate-CallFlowMaps-Simple.ps1"
+    $callFlowScript = Join-Path $ModulesPath "TeamsCallFlowMaps.psm1"
     
     if (-not (Test-Path $callFlowScript)) {
         Write-Warning "Call flow generation script not found: $callFlowScript"
@@ -298,9 +289,7 @@ function Invoke-CallFlowGeneration {
     
     Write-Host "Prerequisites check:" -ForegroundColor Gray
     Write-Host "  ✓ Call flow script: $($prereqs.CallFlowScript)" -ForegroundColor $(if ($prereqs.CallFlowScript) { "Green" } else { "Red" })
-    Write-Host "  ✓ PDF generator: $($prereqs.PdfGenerator)" -ForegroundColor $(if ($prereqs.PdfGenerator) { "Green" } else { "Red" })
-    Write-Host "  ✓ Python available: $($prereqs.Python)" -ForegroundColor $(if ($prereqs.Python) { "Green" } else { "Yellow" })
-    Write-Host "  ✓ Playwright available: $($prereqs.Playwright)" -ForegroundColor $(if ($prereqs.Playwright) { "Green" } else { "Yellow" })
+    Write-Host "  ✓ Chrome/Edge browser: $($prereqs.ChromeEdge)" -ForegroundColor $(if ($prereqs.ChromeEdge) { "Green" } else { "Yellow" })
     
     if (-not $prereqs.CallFlowScript) {
         Write-Error "Cannot generate call flow maps - script missing"
@@ -312,11 +301,22 @@ function Invoke-CallFlowGeneration {
     $callFlowArgs += "-JsonDataPath"
     $callFlowArgs += "`"$DataPath`""
     
+    # Add output path for call flow maps
+    if ($OutputPath) {
+        $callFlowArgs += "-OutputPath"
+        $callFlowArgs += "`"$(Join-Path (Split-Path $DataPath -Parent) "CallFlowMaps_$(Get-Date -Format 'yyyyMMdd_HHmmss')")`""
+    }
+    
     if ($FilterNumbers.Count -gt 0) {
         $callFlowArgs += "-FilterByNumber"
         foreach ($number in $FilterNumbers) {
             $callFlowArgs += "`"$number`""
         }
+    }
+    
+    # Add PDF generation if requested
+    if ($GeneratePDF) {
+        $callFlowArgs += "-GeneratePDF"
     }
     
     # Add IncludeDetailedSettings for comprehensive output
